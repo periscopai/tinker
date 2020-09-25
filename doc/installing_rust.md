@@ -8,11 +8,11 @@ The purpose of this page is to set up rust and vscode integration for build and 
     - [Creating a simple program](#creating-a-simple-program)
 - [VS Code Configuration](#vc-code-configuration)
     - [Required Integrations](#required-integrations)
-        - [Rust (Rust Language Server or RLS)](#rust-(rust-language-server-or-rls))
+        - [Rust (Rust Language Server or RLS)](#rust-rust-language-server-or-rls)
         - [Rust Analyzer](#rust-analyzer)
-        - [CodeLLDB (Debugger)](#codelldb-(debugger))
+        - [CodeLLDB (Debugger)](#codelldb-debugger)
     - [Configuring the builder](#configuring-the-builder)
-- [Debugging Code](#debugging-code)
+    - [Debugging Code](#debugging-code)
 
 # Setting up Rust
 
