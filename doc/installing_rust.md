@@ -124,7 +124,7 @@ So once this is configured, you can invoke the build using ``ctrl-shit-b``
 
 ![rust build](images/vs-code-rust-build.png)
 
-As you can see [here](../vscode/tasks.json) there is more than one task associated to that package. One to build and one to run. 
+As you can see [here](../.vscode/tasks.json) there is more than one task associated to that package. One to build and one to run. 
 
 By default, ``ctrl-shit-b`` will run the task for which the 
 ``default`` key is set to ``true``.
@@ -155,8 +155,8 @@ So now that we can build stuff, let's debug it. The following is only required t
 * Press ``ctrl-shift-p`` and select *Debug: Open launch.json*
 * select the workspace from the picker.
 * select LLDB from the picker
-* This will add a [launch.json](../vscode/launch.json) file 
-  under the [.vscode](../vscode) which shoould look like this
+* This will add a [launch.json](../.vscode/launch.json) file 
+  under the [.vscode](../.vscode) which shoould look like this
 
 ```json
 {
