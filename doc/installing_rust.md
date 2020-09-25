@@ -2,7 +2,19 @@
 
 The purpose of this page is to set up rust and vscode integration for build and debugging rust code
 
-## Setting up Rust
+# Table Of Content
+
+- [Setting up Rust](#setting-up-rust)
+    - [Creating a simple program](#creating-a-simple-program)
+- [VS Code Configuration](#vc-code-configuration)
+    - [Required Integrations](#required-integrations)
+        - [Rust (Rust Language Server or RLS)](#rust-(rust-language-server-or-rls))
+        - [Rust Analyzer](#rust-analyzer)
+        - [CodeLLDB (Debugger)](#codelldb-(debugger))
+    - [Configuring the builder](#configuring-the-builder)
+- [Debugging Code](#debugging-code)
+
+# Setting up Rust
 
 Run
 ```shell
@@ -59,7 +71,7 @@ Why? Because Rust has performance of C++ without the memory safety issues of C++
 
 ## Required Integrations
 
-### Rust (rls)
+### Rust (Rust Language Server or RLS)
 
 * [Rust on MarketPlace](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust)
 
