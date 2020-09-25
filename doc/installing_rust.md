@@ -39,11 +39,11 @@ After installation:
 ```shell
 $ cargo new <package name>
 ```
-We created the first package in [rust/explore](rust/explore) which contains 2 files
+We created the first package in [rust/explore](../rust/explore) which contains 2 files
 
-- [rust/explore/Cargo.toml](rust/explore/Cargo.toml) which is the package manifest (very much like setup.toml)
+- [rust/explore/Cargo.toml](../rust/explore/Cargo.toml) which is the package manifest (very much like setup.toml)
 
-- [rust/explore/src/main.rs](rust/explore/src/main.rs) very similar to main.c
+- [../rust/explore/src/main.rs](rust/explore/src/main.rs) very similar to main.c
 
 ---
 
