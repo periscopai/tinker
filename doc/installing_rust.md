@@ -43,7 +43,7 @@ We created the first package in [rust/explore](../rust/explore) which contains 2
 
 - [rust/explore/Cargo.toml](../rust/explore/Cargo.toml) which is the package manifest (very much like setup.toml)
 
-- [../rust/explore/src/main.rs](rust/explore/src/main.rs) very similar to main.c
+- [rust/explore/src/main.rs](../rust/explore/src/main.rs) very similar to main.c
 
 ---
 
