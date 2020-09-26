@@ -11,6 +11,7 @@ Like in C, stattements must terminated by a semicolon (*;*). and comments are th
 
 # Table Of Content
 
+- [Crate.io](#crate.io)
 - [Data Structures](#data-structures)
     - [Variables](#variables)
     - [Constants](#constants)
@@ -22,7 +23,16 @@ Like in C, stattements must terminated by a semicolon (*;*). and comments are th
     - [loop](#loop)
     - [while](#while)
     - [for](#for)
+- [Memory Management and Ownership](#memory-management-and-ownership)
+    - [Ownership](#ownership)
 
+# Crate.io
+
+[crate.io](https://crates.io/) is to Rust what [Pypi](http://pypi.org) is
+to Python. **crate.io** contains about 50,000 crates or packages and 
+has seen about 4 Billions download. For example the [pyo3](https://crates.io/crates/pyo3)
+crate allowing you to write native rust bindings to python on embbed 
+python into a Rust application.
 
 # Data Structures
 
@@ -35,7 +45,7 @@ immutable (almost like a constant) unless they are define as mutable
 
 ```rust
 let x:u8 = 5;
-x = 5  // cannot assign twice to immutable variable
+x = 5;  // cannot assign twice to immutable variable
 let mut y:u8 = 10; // you can not change the data type of a mutable var
 ```
 While seeming annoying, this is a very neat feature for memory safety
@@ -56,7 +66,7 @@ Unlike variables, constant can be declared in any scope. Also, constant can only
 be set to a const expression. 
 
 ```rust
-const MAX_POINTS: u32 = 100_000
+const MAX_POINTS: u32 = 100_000;
 ```
 
 ## Data Types
@@ -126,10 +136,11 @@ fn do_something(a: ui8, b: ui8){
         x + y + 1
     };
 }
+```
+
 Expression do not end with a ``;`` In the previous example ``{..}`` is an 
 expression where as ``let z = {...};`` is the statement which assigns the 
 value to the variable **z**.
-```
 
 functions may return values and those value must be typed. 
 
@@ -217,4 +228,82 @@ for element in a.iter() {
 Languages like Python use garbage collection which alleviate programmers to 
 clean after themselves but introduce performance hit, whereas languages like 
 C/C++ "trust" that programmers will do the right thing. Rust introduces the 
-notion of **ownership** where the compiler hold you accountable.
+notion of [ownership](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html) 
+where the compiler holds you accountable.
+
+## Ownership
+
+The ownership rules are:
+
+- Each value in Rust has a variable that’s called its owner.
+- There can only be one owner at a time.
+- When the owner goes out of scope, the value will be dropped.
+
+```rust
+let stat = String::from("hello"); // On the stack
+let mut owner = String::from("hello"); // On the heap
+let string_pointer = owner; // owner no longer owns the variable
+println!("{}", owner); // compiler error
+```
+
+So basically it means that we can not have more than one reference 
+to a memory allocation on the heap. 
+
+To make the last two statements above valid, we would have to clone it
+
+```rust
+let string_pointer = owner.clone(); // owner no longer owns the variable
+println!("{}", owner); // compiler error
+```
+The only types not subject to that rule are integers, floats, chars and
+any tuples or array consisting of those types only.
+
+Here is an even more complex example taken straight from the documentation
+
+```rust
+fn main() {
+    let s = String::from("hello");  // s comes into scope
+
+    takes_ownership(s);             // s's value moves into the function...
+                                    // ... and so is no longer valid here
+
+    let x = 5;                      // x comes into scope
+
+    makes_copy(x);                  // x would move into the function,
+                                    // but i32 is Copy, so it’s okay to still
+                                    // use x afterward
+
+} // Here, x goes out of scope, then s. But because s's value was moved, nothing
+  // special happens.
+
+fn takes_ownership(some_string: String) { // some_string comes into scope
+    println!("{}", some_string);
+} // Here, some_string goes out of scope and `drop` is called. The backing
+  // memory is freed.
+
+fn makes_copy(some_integer: i32) { // some_integer comes into scope
+    println!("{}", some_integer);
+} // Here, some_integer goes out of scope. Nothing special happens.
+
+```
+
+So basically, there is no notion of reference in Rust. Only one variable 
+can refer to a memory region at any given time. When that variable goes 
+out of scope, that region is released automatically. Thus the compiler 
+can follow strict ownership and when that rule is broken.
+
+Finally, if you need all the value back from the function you just called,
+their ownership must be returned to the caller
+
+```rust
+fn calculate_length(s: String) -> (String, usize) {
+    let length = s.len(); // len() returns the length of a String
+
+    (s, length)
+}
+
+let s1 = String::from("hello");
+let (s2, len) = calculate_length(s1);
+```
+
+more on ownership can be found [here](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html)
