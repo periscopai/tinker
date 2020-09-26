@@ -147,6 +147,8 @@ was *void* but the expected type was *ui8*
 
 # Control Flow
 
+Control flow constructs are pretty standard ...
+
 ## if/else
 
 ```rust
@@ -170,16 +172,49 @@ fn main() {
 
     let number = if true { 5 } else { 6 }; // very similar to python
     let number = if condition { 5 } else { "six" }; // compilation error 
-
-
 }
 ```
 
-
 ## loop
+
+The ``loop`` is equivalent to ``while True:`` where looping occurs until 
+a condition interrupts the flow. It is also possible to return a value in 
+the process.
+
+```rust
+let mut x:ui8 = 0
+let result = loop{
+    x += 1;
+    if x == 5{
+        break x * 2; // 10 is returned
+    }
+}
+```
 
 ## while 
 
+```rust
+let mut x:ui8 = 0
+while x <= 5{
+    x += 1;
+}
+```
+
 ## for
 
+```rust
+let a = [10, 20, 30, 40, 50];
+
+for element in a.iter() {
+    println!("the value is: {}", element);
+}
+```
+
 [more on control flows](https://doc.rust-lang.org/book/ch03-05-control-flow.html)
+
+# Memory Management and Ownership
+
+Languages like Python use garbage collection which alleviate programmers to 
+clean after themselves but introduce performance hit, whereas languages like 
+C/C++ "trust" that programmers will do the right thing. Rust introduces the 
+notion of **ownership** where the compiler hold you accountable.
