@@ -3,7 +3,34 @@
 The goal of this exercise is to create an RTSP server (in Rust/Gstreamer) capable
 of take video from a camera or file source, encoding it and streaming it over RTSP. 
 
+---
+
+**Idea**
+
+All the examples I have found out there invove gst-launch building pipelines on 
+the command line. However, I haven't found code example (And I believe that the 
+gstreamer examples are very genric)
+
+I did find what appears to be a Rust Example in the [gstreamer-rs]https://github.com/sdroege/gstreamer-rs/blob/master/examples/src/bin/rtsp-server.rs) project
+
+Another avenue is Amazon Kinesis
+
+However [Amazon Kinesis](https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/examples-gstreamer-plugin.html) has an example of such pipeline (written in C++) on gitHub calle [Amazon Kinesis Video Streams Procedure SDK](https://github.com/awslabs/amazon-kinesis-video-streams-producer-sdk-cpp). This project contains
+the plugin implementation but this [sample code](https://github.com/awslabs/amazon-kinesis-video-streams-producer-sdk-cpp/blob/master/samples/kvs_gstreamer_multistream_sample.cpp) seems to have what appears to 
+be an RTSP pipeline.
+
+
+---
+
 # References
+
+## Application
+
+- [gstreamer-rs on gitHub](https://github.com/sdroege/gstreamer-rs)
+
+- [Writing GStreamer Applications in Rust](https://coaxion.net/blog/2017/07/writing-gstreamer-applications-in-rust/)
+
+## Elements (a.k.a. plugins)
 
 - [2018 - How to write GStreamer Elements in Rust Part 1: A Video Filter for converting RGB to grayscale](https://coaxion.net/blog/2018/01/how-to-write-gstreamer-elements-in-rust-part-1-a-video-filter-for-converting-rgb-to-grayscale/)
 
