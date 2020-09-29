@@ -25,6 +25,9 @@ Like in C, stattements must terminated by a semicolon (*;*). and comments are th
     - [for](#for)
 - [Memory Management and Ownership](#memory-management-and-ownership)
     - [Ownership](#ownership)
+    - [References](#references)
+    - [slices](#slices)
+  - [Structures](#structures)
 
 # Crate.io
 
@@ -249,14 +252,27 @@ println!("{}", owner); // compiler error
 So basically it means that we can not have more than one reference 
 to a memory allocation on the heap. 
 
+```shell
+`3 |     let mut owner = String::from("hello"); // On the heap
+   |         --------- move occurs because `owner` has type `std::string::String`, which does not implement the `Copy` trait
+ 4 |     let string_pointer = owner; // owner no longer owns the variable
+   |                          ----- value moved here
+ 5 |     println!("{}", owner); // compiler error    
+   |                    ^^^^^ value borrowed here after move
+  ```
+
 To make the last two statements above valid, we would have to clone it
 
 ```rust
-let string_pointer = owner.clone(); // owner no longer owns the variable
-println!("{}", owner); // compiler error
+let string_pointer = owner.clone(); // owner still owns the memory
+                                    // string_pointer hold a copy of that string   
+println!("{}", owner);              // no problem
 ```
 The only types not subject to that rule are integers, floats, chars and
 any tuples or array consisting of those types only.
+
+If the data type does provide the "Copy" trait, a new memory allocation would be
+made and the data copied to that location under the hoos.
 
 Here is an even more complex example taken straight from the documentation
 
@@ -287,23 +303,172 @@ fn makes_copy(some_integer: i32) { // some_integer comes into scope
 
 ```
 
-So basically, there is no notion of reference in Rust. Only one variable 
-can refer to a memory region at any given time. When that variable goes 
-out of scope, that region is released automatically. Thus the compiler 
+Only one variable can refer to a memory region at any given time. When that 
+variable goes out of scope, that region is released automatically. Thus the compiler 
 can follow strict ownership and when that rule is broken.
 
-Finally, if you need all the value back from the function you just called,
-their ownership must be returned to the caller
+So basically, when you pass a variable to a function, you loose its ownership.
+To illustrate this, let write 
 
 ```rust
-fn calculate_length(s: String) -> (String, usize) {
-    let length = s.len(); // len() returns the length of a String
-
-    (s, length)
+fn main() {
+    let s1 = String::from("Hello");
+    let s2 = by_value(s1);
+    println!("s1={}", s1);
+    println!("s2={}", s2);
 }
-
-let s1 = String::from("hello");
-let (s2, len) = calculate_length(s1);
+fn by_value(s: String) -> String{
+    s
+}
 ```
+which will result in the following compilation error (self explanatory)
+
+```shell
+ --> src/main.rs:4:23
+  |
+2 |     let s1 = String::from("Hello");
+  |         -- move occurs because `s1` has type `std::string::String`, which does not implement the `Copy` trait
+3 |     let s2 = by_value(s1);
+  |                       -- value moved here
+4 |     println!("s1={}", s1);
+  |                       ^^ value borrowed here after move
+
+```
+A way to solve this would be 
+
+```rust
+fn main() {
+    let s1 = String::from("Hello");
+    let s1 = by_value(s1);
+    println!("s1={}", s1);
+}
+```
+where we regained the ownership through the return value, but this is quite 
+cumbersome ... so here comes references
 
 more on ownership can be found [here](https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html)
+
+## References
+
+```rust
+fn main() {
+    let s1 = String::from("Hello");
+    by_value(&s1);
+    println!("s1={}", s1);
+}
+fn by_value(s: &String) -> usize{
+    s.len()
+}
+```
+
+which are very similar to C++ references. In this particular instance, 
+``s1`` regains the ownership of the memory area after the call. 
+
+However, unlike C++, the called function may not modified the actual
+parameter value. For this to happen, one must declare the formal parameter
+ as mutable. And of course, the variable itself must be declared at such. In
+ other words, the function says I will modify the memory and the variables 
+ says I am allowing myself to be modified. 
+
+```rust
+fn main() {
+    let mut s1 = String::from("Hello");
+    by_value(&mut s1);
+    println!("s1={}", s1);
+}
+fn by_value(s: &mut String) -> usize{
+    s.push_str(", Fakayu!");
+    s.len()
+}
+```
+which yields
+
+```shell
+    Compiling explore v0.1.0 (/home/laurent/github/tinker/rust/explore)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.16s
+    Running `target/debug/explore`
+s1=Hello, Fakayu!
+```
+
+[More on references](https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html)
+
+Do in summary
+
+- var: type - We want ownership and the original owner gives it away
+- var: &type - We don't want ownership
+- var: &mut type we don't want ownership but will modify the memory (most likely)
+
+And 
+
+- The function must be declared as such ``fn by_value(s: &mut String) -> usize``
+- the variable must be declared as such ``let mut s1 = String::from("Hello");``
+- The function must be called as such ``by_value(&mut s1);``
+
+## Slices
+
+A slice is a variable that holds a **reference** to a region of a memory block.
+For instance
+
+```rust
+    let s = String::from("hello world");
+    let hello = &s[0..5];
+    let world = &s[6..11];    
+    println!("{}", hello);
+    println!("{}", world);
+```
+
+For full details on slices click [here](https://doc.rust-lang.org/book/ch04-03-slices.html)
+
+# Structures
+
+Structure are very much like C++ structures. Rememer that C++ structures a C structures
+supporting methods. By default those methods are always public. They are like Rust 
+tuples but rather than accessing their elements using an index, you can use names.
+
+- To make a structure modifiable, you need to declare the variable pointing to it 
+  as mutable.
+- The entire structure becomes modifiable from this point on. 
+
+```rust
+
+#[derive(Debug)] // this allows us to print the struct wihtout the Diplay trait
+struct Point{
+    x: i32,
+    y: i32,
+    z: i32,
+}
+fn main() {
+    let origin = Point {
+        x: 0,
+        y: 0,
+        z: 0
+    }; // Immutable variable pointing to a point
+
+    let mut target = Point {
+        x: 3,
+        ..origin // Update syntax which default y,z to origins values
+    };
+    let mut visor = new_point(1,2,3); // constructor like syntax
+    println!("origin={:#?}", origin);
+    println!("target={:#?}", target);
+    println!("visor={:#?}", visor);
+
+}
+
+fn new_point(x: i32, y:i32, z:i32) -> Point {
+    Point {x, y,z,}
+}
+```
+
+Finally you can create Tuple Structs without named field
+
+```rust
+struct Point2(i32, i32, i32); // Note the use if () instead of {}
+let mut target = Point2(127, 127, 127);
+println!("target X={}", target.0)
+```
+
+
+
+Check the [chapter on structures](https://doc.rust-lang.org/book/ch05-01-defining-structs.html)
+for more details.
