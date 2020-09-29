@@ -31,6 +31,7 @@ Like in C, stattements must terminated by a semicolon (*;*). and comments are th
   - [Slices](#slices)
 - [Structures](#structures)
   - [Methods](#methods)
+    - [Associated Functions](#associated-functions)
 
 # Crate.io
 
@@ -509,19 +510,41 @@ impl Rectangle {
     fn area(&self) -> u32 {
         self.width * self.height
     }
-}```
+}
+```
 
-The first argument is a reference to the structure itself which could also be writtent
+The first argument is a reference to the structure itself which could also be written
 
 ```rust
 impl Rectangle {
     fn area(rectangle: &Rectangle) -> u32 {
         self.width * self.height
     }
+}
 ```
 
 Of course, the same rules of ownership apply. A method that modifies the structure 
-would have to take a mutable reference.
+would have to take a mutable reference. For instance, for a method to be able 
+to modify its member, the implementation must take a mutable reference and the 
+variables must be defined as mutable. 
+
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn double(&mut self) {
+        self.width *= 2
+        self.height *= 2
+    }
+}
+
+let mut rec = Rectangle{ width=20, height=40}; 
+
+```
 
 See [Method Syntax](https://doc.rust-lang.org/book/ch05-03-method-syntax.html)
 
