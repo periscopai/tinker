@@ -495,4 +495,37 @@ for more details.
 
 ## Methods
 
+As mentioned, Rust structures are very similar to C++ structure. Thus to associated method
+to them, you encapsulate the function ``fn`` in an ``imp`` block as shown below
+
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+impl Rectangle {
+    fn area(&self) -> u32 {
+        self.width * self.height
+    }
+}```
+
+The first argument is a reference to the structure itself which could also be writtent
+
+```rust
+impl Rectangle {
+    fn area(rectangle: &Rectangle) -> u32 {
+        self.width * self.height
+    }
+```
+
+Of course, the same rules of ownership apply. A method that modifies the structure 
+would have to take a mutable reference.
+
 See [Method Syntax](https://doc.rust-lang.org/book/ch05-03-method-syntax.html)
+
+### Associated Functions
+
+Basically static methods. Often use as constructors. 
+
