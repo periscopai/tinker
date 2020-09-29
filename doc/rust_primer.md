@@ -11,23 +11,26 @@ Like in C, stattements must terminated by a semicolon (*;*). and comments are th
 
 # Table Of Content
 
-- [Crate.io](#crate.io)
+- [Rust Primer](#rust-primer)
+- [Table Of Content](#table-of-content)
+- [Crate.io](#crateio)
 - [Data Structures](#data-structures)
-    - [Variables](#variables)
-    - [Constants](#constants)
-    - [Data Types](#data-types)
-    - [Tuples and Arrays](#tuples-and-arrays)
+  - [Variables](#variables)
+  - [Constants](#constants)
+  - [Data Types](#data-types)
+  - [Tuples and Arrays](#tuples-and-arrays)
 - [Functions](#functions)
 - [Control Flow](#control-flow)
-    - [if/else](#ifelse)
-    - [loop](#loop)
-    - [while](#while)
-    - [for](#for)
+  - [if/else](#ifelse)
+  - [loop](#loop)
+  - [while](#while)
+  - [for](#for)
 - [Memory Management and Ownership](#memory-management-and-ownership)
-    - [Ownership](#ownership)
-    - [References](#references)
-    - [slices](#slices)
-  - [Structures](#structures)
+  - [Ownership](#ownership)
+  - [References](#references)
+  - [Slices](#slices)
+- [Structures](#structures)
+  - [Methods](#methods)
 
 # Crate.io
 
@@ -460,6 +463,25 @@ fn new_point(x: i32, y:i32, z:i32) -> Point {
 }
 ```
 
+which produces
+```shell
+    origin=Point {
+        x: 0,
+        y: 0,
+        z: 0,
+    }
+    target=Point {
+        x: 3,
+        y: 0,
+        z: 0,
+    }
+    visor=Point {
+        x: 1,
+        y: 2,
+        z: 3,
+    }
+```
+
 Finally you can create Tuple Structs without named field
 
 ```rust
@@ -468,7 +490,9 @@ let mut target = Point2(127, 127, 127);
 println!("target X={}", target.0)
 ```
 
-
-
 Check the [chapter on structures](https://doc.rust-lang.org/book/ch05-01-defining-structs.html)
 for more details.
+
+## Methods
+
+See [Method Syntax](https://doc.rust-lang.org/book/ch05-03-method-syntax.html)
