@@ -16,6 +16,11 @@ build: env
 	@echo type make debug=true to build in debug mode
 	gcc $(GCC_DEBUG_FLAG) $(SOURCE) -o $(TARGET) `pkg-config --cflags --libs gstreamer-1.0`
 
+.PHONY: run
+run: build
+	@echo running $(TARGET)
+	$(TARGET)
+
 .PHONY: env
 env:
 	- mkdir -p $(TARGET_DIR)

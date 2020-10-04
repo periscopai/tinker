@@ -53,6 +53,13 @@ Then I added a task in [.vscode/tasks.json](../.vscode/tasks.json) and a launche
 
 This is a simple example. However the same process should apply to all the other "mini" projects.
 
+To run the command from the command line
+
+```shell
+$ cd gstreamer/intro
+$ make run
+```
+
 To build and debug, do the following
 
 - select the file (e.g. [gstreamer/intro/gst-intro.c](../gstreamer/intro/gst-intro.c)) and open it as illustrated below
