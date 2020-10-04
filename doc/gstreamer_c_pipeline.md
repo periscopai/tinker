@@ -47,7 +47,7 @@ Install the toolchain
 $ sudo apt-get install build-essential gdb pkg-config
 ```
 
-Then I added a task in [.vscode/tasks.json](../.vscode/task.json) and a launcher based on [this article](https://code.visualstudio.com/docs/cpp/config-linux). Nothing fancy. 
+Then I added a task in [.vscode/tasks.json](../.vscode/tasks.json) and a launcher based on [this article](https://code.visualstudio.com/docs/cpp/config-linux). Nothing fancy. 
 
 ### Hello World
 
