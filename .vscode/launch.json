@@ -5,6 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "gstreamer build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/target/debug/${fileBasenameNoExtension}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+              {
+                "description": "Enable pretty-printing for gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+              }
+            ],
+            "preLaunchTask": "DEBUG gstreamer build active file",
+            "miDebuggerPath": "/usr/bin/gdb"
+        },
+        {
             "type": "lldb",
             "request": "launch",
             "name": "debug rust explore",
