@@ -1,5 +1,5 @@
 debug?=false
-SOURCE=gst-intro.c
+SOURCE=gst-rtsp.c
 GCC_DEBUG_FLAG=
 ifeq ($(strip $(debug)),true)
 	TARGET_DIR=target/debug
