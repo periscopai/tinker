@@ -41,10 +41,16 @@ main (int argc, char *argv[])
   printf("silent mode %d", silent);
 
   // ***************************************************************************
-  /* Initialize GStreamer */
+  // Initialize GStreamer 
+  // load plugins
+  // parse command line arguments.
+
   gst_init (&argc, &argv);
 
-  /* Build the pipeline */
+
+  // ***************************************************************************
+  // Build the pipeline 
+  // Build the pi
   pipeline =
       gst_parse_launch
       ("playbin uri=https://www.freedesktop.org/software/gstreamer-sdk/data/media/sintel_trailer-480p.webm",
@@ -55,6 +61,7 @@ main (int argc, char *argv[])
 
   /* Wait until error or EOS */
   bus = gst_element_get_bus (pipeline);
+  // This call will block until one of the condition is met.
   msg =
       gst_bus_timed_pop_filtered (bus, GST_CLOCK_TIME_NONE,
       GST_MESSAGE_ERROR | GST_MESSAGE_EOS);
