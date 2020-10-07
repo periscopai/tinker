@@ -11,6 +11,8 @@ C then trying something through Rust.
 - [GStreamer Foundations](#gstreamer-foundations)
   - [Cleanup](#cleanup)
   - [Factories](#factories)
+  - [Dynamic Pipelining](#dynamic-pipelining)
+  - [gst-inspect](gst-inspect)
 - [Examples](examples)
 
 
@@ -83,10 +85,10 @@ The following is taken from [GStreamer Foundations](https://gstreamer.freedeskto
 
 Check the [Gstreamer Lib Documentation] for function or structure documentation.
 
-But in an nutshell, there are 2 fundamental construct in GStreamer; **Elements** and **Pads**. **Elements** are responsible for processing 
-data and **Pads** provide the data connections between **Elements**. **Pads** can either be *sink* or *source*. Those connections are negotiated through *Capacities* (GstCaps)
+But in an nutshell, there are 2 fundamental construct in GStreamer; **[Element]s** and **Pads**. **[Element]s** are responsible for processing 
+data and **Pads** provide the data connections between **[Element]s**. **Pads** can either be *sink* or *source*. Those connections are negotiated through *Capacities* (GstCaps)
 
-There are three types of **Elements**:
+There are three types of **[Element]s**:
 
   - **Sources** - this is where the data originate from (e.g. file)
   - **Filters** - data processing elements such as demuxer, decoders, etc
@@ -94,12 +96,12 @@ There are three types of **Elements**:
 
 ![gstreamer pipeline](images/gstreamer-pipeline.png)
 
-**Bins** are containers of **Elements** and are **Elements** themselves, being subclasses of **Elements**. The purpose of **Bins** is 
-to abstract behavior that can not be implemented as a single **Element**. For example, an encoder may consist of multiple **Elements**
-(pre-processing, encoding, quantization, rate control) but should be percieved as a single **Element** in the pipeline. A great example 
+**Bins** are containers of **[Element]s** and are **[Element]s** themselves, being subclasses of **[Element]s**. The purpose of **Bins** is 
+to abstract behavior that can not be implemented as a single **[Element]**. For example, an encoder may consist of multiple **[Element]s**
+(pre-processing, encoding, quantization, rate control) but should be percieved as a single **[Element]** in the pipeline. A great example 
 of this in GStreamer is [playbin](https://gstreamer.freedesktop.org/documentation/playback/playbin.html)
 
-**Pipelines** are top level **Bins**.
+**[Pipeline]s** are top level **Bins**.
 
 Finally, GStreamer offers 4 communication mechanism: *Buffers*, *Events*, *Messages* and *Queries*. You can read the details on the 
 link aforementioned (as the purpose here is not to repeat what is already documented), but those should be pretty straight forward
@@ -107,10 +109,10 @@ for the picture blow
 
 ![gstreamer communication](images/gstreamer-communication.png)
 
-Those communication mechanism are carried through a **Bus** as illustrated above. **BUS**ses are built-in automatically as part of the pipeline. 
+Those communication mechanism are carried through a **[Bus]** as illustrated above. [Bus]ses are built-in automatically as part of the pipeline. 
 
-You can either poll the **BUS** or install a watch (a.k.a. callback). In the later, the callback will be called whenever a messages is posted. A third option (``gst_bus_timed_pop_filtered()``) is like a wait on multiple,
-where you can specify multiple message types and block until one those appear on the **BUS**. 
+You can either poll the **[Bus]** or install a watch (a.k.a. callback). In the later, the callback will be called whenever a messages is posted. A third option (``gst_bus_timed_pop_filtered()``) is like a wait on multiple,
+where you can specify multiple message types and block until one those appear on the **[Bus]**. 
 
 ```C
 // This call will block until the end of the playback is reached 
@@ -132,11 +134,11 @@ GStreamer is based in glib's GObject. This library maintains reference
 count on objects and their memory is released when the reference count 
 is 0. This required reading the documentation and understand if the
 objects returned by some functions need to be released. For instance, 
-the ``msg`` obtained from the **BUS** access must be released.
+the ``msg`` obtained from the **[Bus]** access must be released.
 
 ## Factories
 
-GStreamer Elements are built by factories (you do not instance
+GStreamer [Element]s are built by factories (you do not instance
 them directly) as shown below
 
 ```C
@@ -175,6 +177,53 @@ connection negotiation takes place.
 You first add elements to the pipeline, and then explicitly attempt
 to connect them one to another via ``gst_element_link()``
 
+## Dynamic Pipelining 
+
+This is the topic of [tutorial 3](https://gstreamer.freedesktop.org/documentation/tutorials/basic/dynamic-pipelines.html)
+This shows how you can alter the structure of a pipeline based on messages, configured through Dynamic 
+[Pads].
+
+The idea is the following. You create a pipeline, add all the Elements to the pipeline, then add a signal handler
+on the source element and finally start the pipeline. 
+
+```C
+  /* Connect to the pad-added signal */
+  g_signal_connect (data.source, "pad-added", G_CALLBACK (pad_added_handler), &data);
+  /* Start playing */
+  ret = gst_element_set_state (data.pipeline, GST_STATE_PLAYING);  
+```
+
+The source opens the URI, demux the content and dynamically adds as many [Pad]s as it matches elementary 
+streams - iin this case, the pad_handler, ckeck the pad pad type and may decide to ignore it or process
+it. This is illustrated below
+
+```C
+  if (!g_str_has_prefix (new_pad_type, "audio/x-raw")) {
+    g_print ("It has type '%s' which is not raw audio. Ignoring.\n", new_pad_type);
+    goto exit;
+  }
+
+  /* Attempt the link */
+  ret = gst_pad_link (new_pad, sink_pad);
+  if (GST_PAD_LINK_FAILED (ret)) {
+    g_print ("Type is '%s' but link failed.\n", new_pad_type);
+  } else {
+    g_print ("Link succeeded (type '%s').\n", new_pad_type);
+  }
+
+```
+which produces the following
+
+```text
+Pipeline state changed from NULL to READY:
+Received new pad 'src_0' from 'source':
+It has type 'video/x-raw' which is not raw audio. Ignoring.
+Received new pad 'src_1' from 'source':
+Link succeeded (type 'audio/x-raw').
+```
+
+
+
 # Examples
 
 Don't forget to refer to the [Gstreamer Lib Documentation]
@@ -183,3 +232,7 @@ To be started.
 
 
 [Gstreamer Lib Documentation]: https://gstreamer.freedesktop.org/documentation/libs.html
+[Bus]: https://gstreamer.freedesktop.org/documentation/gstreamer/gstbus.html?gi-language=c#GstBus
+[Element]: https://gstreamer.freedesktop.org/documentation/gstreamer/gstelement.html?gi-language=c#GstElement
+[Pipeline]: https://gstreamer.freedesktop.org/documentation/gstreamer/gstpipeline.html?gi-language=c#GstPipeline
+[Pads]: https://gstreamer.freedesktop.org/documentation/gstreamer/gstpad.html?gi-language=c#GstPad
