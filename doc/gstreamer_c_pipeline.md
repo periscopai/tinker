@@ -81,6 +81,8 @@ if you run this example you should get something like this
 
 The following is taken from [GStreamer Foundations](https://gstreamer.freedesktop.org/documentation/application-development/introduction/basics.html?gi-language=c#)
 
+Check the [Gstreamer Lib Documentation] for function or structure documentation.
+
 But in an nutshell, there are 2 fundamental construct in GStreamer; **Elements** and **Pads**. **Elements** are responsible for processing 
 data and **Pads** provide the data connections between **Elements**. **Pads** can either be *sink* or *source*. Those connections are negotiated through *Capacities* (GstCaps)
 
@@ -175,4 +177,9 @@ to connect them one to another via ``gst_element_link()``
 
 # Examples
 
+Don't forget to refer to the [Gstreamer Lib Documentation]
+
 To be started.
+
+
+[Gstreamer Lib Documentation]: https://gstreamer.freedesktop.org/documentation/libs.html

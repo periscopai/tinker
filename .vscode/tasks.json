@@ -12,10 +12,7 @@
               "cwd": "${fileDirname}"
             },
             "problemMatcher": ["$gcc"],
-            "group": {
-              "kind": "build",
-              "isDefault": false,
-            }
+            "group":"build",
         },
         {
             "type": "shell",
@@ -25,11 +22,7 @@
             "options": {
               "cwd": "${fileDirname}"
             },
-            "problemMatcher": ["$gcc"],
-            "group": {
-              "kind": "build",
-              "isDefault": false,
-            }
+            "group":"build",
         },
         {
             "label": "build rust explore",
@@ -51,10 +44,7 @@
             "args": [
                 "run"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": false,
-            },
+            "group":"build",
             "options": {
                 "cwd": "${workspaceFolder}/rust/explore"
             },
