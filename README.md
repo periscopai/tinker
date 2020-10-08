@@ -13,6 +13,37 @@ The goal behind this repos is
 - [creating a crate](doc/crate.md) (package)
 - [python and rust](doc/python_and_rust.md)
 
+# Procedures
+
+The [procedures](procedures) folder contains a series of how to's and are organized as follow:
+
+- ubuntu-1804
+
+    This section explain how to setup Ubuntu 18.04
+    - [nvidia](procedures/1_ubuntu_1804/nvidia.md)
+
+- setup
+
+    - [github](procedures/2_setup/github.md)
+
+- gstreamer
+
+    - [installation](procedures/3_gstreamer/installation.md)
+    - [tutorials](procedures/3_gstreamer/tutorials.md)
+- rust
+
+    Rust installation and tutorials
+
+- vscode
+
+    VSCode Configuration
+
+---
+**Note**
+
+Those are also testspace sepecifications
+---
+
 # References
 
 - [The Rust Programming Language](https://doc.rust-lang.org/book/) The official book available online
