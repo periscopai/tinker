@@ -11,12 +11,12 @@ It is very important to follow those instructions very precisely. In order for D
 to work, the following needs to be installed:
 
 - [NVidia GFX Driver](#graphic-driver) **450.51**
-- [Cuda](#cuda-10.2) **10.2**
-- [TensorRT](#install-tensorrt-7.0) **7.0**
+- [Cuda](#cuda-102) **10.2**
+- [TensorRT](#install-tensorrt-70) **7.0**
 - [Install libkafta](#install-libkafta)
 - [Install the GStreamer Libraries](#install-the-gstreamer-libraries)
-- [DeepStream SDK 5.0](#deepStream-sdk-5.0)
-- [DeepStream Test](#deepStream-test)
+- [DeepStream SDK 5.0](#deepstream-sdk-5.0)
+- [DeepStream Test](#deepstream-test)
 
 
 ## Graphic Driver
