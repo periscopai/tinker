@@ -16,26 +16,19 @@ The goal behind this repos is
 The [doc/procedures](doc]/procedures) folder contains a series of how to's and are organized as follow:
 
 - ubuntu-1804
-
-    This section explain how to setup Ubuntu 18.04
     - [nvidia](doc/procedures/1_ubuntu_1804/nvidia.md)
 
 - setup
-
     - [github](doc/procedures/2_setup/github.md)
 
 - gstreamer
-
     - [installation](doc/procedures/3_gstreamer/installation.md)
     - [tutorials](doc/procedures/3_gstreamer/tutorials.md)
 - rust
-
-    Rust installation and tutorials
     - [installation](doc/procedures/4_rust/installation.md)
-
 - vscode
-
-    VSCode Configuration
+    - [C++ Configuration](doc/procedures/5_vscode/c++-setup.md)
+    - [Rust Configuration](doc/procedures/5_vscode/rust-setup.md)
 
 ---
 **Note**
