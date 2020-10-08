@@ -6,14 +6,20 @@ C then trying something through Rust.
 # Table Of Content
 
 - [Build System](#build-system)
-    - [Setting Up VS Code](#setting-up-vs-Code)
-        - [Hello World](#hello-world)
 - [GStreamer Foundations](#gstreamer-foundations)
   - [Cleanup](#cleanup)
   - [Factories](#factories)
   - [Dynamic Pipelining](#dynamic-pipelining)
   - [gst-inspect](gst-inspect)
 - [Examples](examples)
+
+---
+REFERENCE
+
+- check [vscode c++ setup](../procedures/5_vscode/c++-setup.md) to learn how to configure VS Code
+- Check [gstreamer installation](../procedures/3_gstreamer/installation.md) for 
+  additional configuration steps.
+---
 
 
 I am following the [GStreamer tutorial](https://gstreamer.freedesktop.org/documentation/tutorials/index.html)
@@ -37,47 +43,6 @@ It is worth mentioning that [GStreamer uses Meson]()
 
 
 
-## Setting Up VS Code
-
-First install the C++ Plugin from the MarketPlace 
-
-![gstreamer intro](images/vs-code-marketplace-c++.png)
-
-As we want to debug and build from VS Code we want to setup the environment correctly so we can 
-trace through the code (and forgive me my C is beyong rusty)
-
-Install the toolchain
-
-```
-$ sudo apt-get install build-essential gdb pkg-config
-```
-
-Then I added a task in [.vscode/tasks.json](../.vscode/tasks.json) and a launcher based on [this article](https://code.visualstudio.com/docs/cpp/config-linux). Nothing fancy. 
-
-### Hello World
-
-This is a simple example. However the same process should apply to all the other "mini" projects.
-
-To run the command from the command line
-
-```shell
-$ cd gstreamer/intro
-$ make run
-```
-
-To build and debug, do the following
-
-- select the file (e.g. [gstreamer/intro/gst-intro.c](../gstreamer/intro/gst-intro.c)) and open it as illustrated below
-  ![gstreamer debug](images/vs-code-debug-gstreamer.png)
-- set a break point
-- click on the "debug/Play" Icon on the left handside bar (just above marketplace) and select the
-  ``gstreamer build and debug active file`` from the drop down. This will automatically build the file in 
-  debug and then launch the debugger and stop on the breakpoint.
-  ![gstreamer debug config](images/vs-code-debug-config-gstreamer.png)
-  
-if you run this example you should get something like this
-
-![gstreamer intro](images/gst-intro.png)
 
 # GStreamer Foundations
 
