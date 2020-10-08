@@ -38,7 +38,7 @@ $ make run
 
 To build and debug, do the following
 
-- select the file (e.g. [gstreamer/intro/gst-intro.c](../gstreamer/intro/gst-intro.c)) and open it as illustrated below
+- select the file (e.g. [gstreamer/intro/gst-intro.c](../../gstreamer/intro/gst-intro.c)) and open it as illustrated below
   ![gstreamer debug](img/vs-code-debug-gstreamer.png)
 - set a break point
 - click on the "debug/Play" Icon on the left handside bar (just above marketplace) and select the
