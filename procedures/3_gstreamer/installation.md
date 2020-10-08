@@ -70,4 +70,4 @@ sudo apt-get install libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-pl
   and a window like this should appear playing the **Sintel** trailer.
   ![gstreamer intro](../../doc/images/gst-intro.png)
 
-## VScode Configureation
+
