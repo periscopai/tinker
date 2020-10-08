@@ -9,8 +9,8 @@ whenever possible.
 Like in C, stattements must terminated by a semicolon (*;*). and comments are the C++ style
 ``//``
 
-To install rust, check the [installation](procedures/4_rust/installation.md) instructions.
-This project comes will the vscode configuration files in [.vscode](../vscode) but 
+- To install rust, check the [installation](../procedures/4_rust/installation.md) instructions.
+- This project comes will the vscode configuration files in [.vscode](../vscode) but 
 requires some extensions to be installed. Find instructions [here](../procedures/5_vscode/rust-setup.md)
 
 # Table Of Content

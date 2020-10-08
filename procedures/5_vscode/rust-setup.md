@@ -12,6 +12,13 @@ testspace:
     - [Configuring the builder](#configuring-the-builder)
     - [Debugging Code](#debugging-code)
 
+---
+NOTE
+
+check the [rust installation](../procedures/4_rust/installation.md) chpater for instructions.
+
+---
+
 # VS Code Configuration
 
 The following is based on those two articles:
