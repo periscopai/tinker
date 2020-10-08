@@ -187,6 +187,49 @@ Received new pad 'src_1' from 'source':
 Link succeeded (type 'audio/x-raw').
 ```
 
+If you run the ``gst-inspect-1.0 uridecodebin`` command, You will see the capacities advertised
+
+```shell
+caps                : The caps on which to stop decoding. (NULL = default)
+                        flags: readable, writable
+                                                   video/x-raw(ANY)
+                                                   audio/x-raw(ANY)
+                                                   text/x-raw(ANY)
+                                                   subpicture/x-dvd
+                                                   subpicture/x-dvb
+                                                   subpicture/x-xsub
+                                                   subpicture/x-pgs
+
+```
+
+as well as the signals that this plugin can emit
+
+```shell
+Element Signals:
+  "pad-added" :  void user_function (GstElement* object,
+                                     GstPad* arg0,
+                                     gpointer user_data);
+  "pad-removed" :  void user_function (GstElement* object,
+                                       GstPad* arg0,
+                                       gpointer user_data);
+  "no-more-pads" :  void user_function (GstElement* object,
+                                        gpointer user_data);
+
+````
+
+Finally note that the function associated to the pad above shows the signature of the 
+callback function expected, in this case
+
+```C
+/* This function will be called by the pad-added signal */
+static void pad_added_handler (GstElement *src, GstPad *new_pad, CustomData *data) {
+  GstPad *sink_pad = gst_element_get_static_pad (data->convert, "sink");
+  GstPadLinkReturn ret;
+  GstCaps *new_pad_caps = NULL;
+  GstStructure *new_pad_struct = NULL;
+  const gchar *new_pad_type = NULL;
+```
+
 
 
 # Examples
