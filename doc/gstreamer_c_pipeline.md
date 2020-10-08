@@ -16,8 +16,8 @@ C then trying something through Rust.
 ---
 REFERENCE
 
-- check [vscode c++ setup](../procedures/5_vscode/c++-setup.md) to learn how to configure VS Code
-- Check [gstreamer installation](../procedures/3_gstreamer/installation.md) for 
+- check [vscode c++ setup](procedures/5_vscode/c++-setup.md) to learn how to configure VS Code
+- Check [gstreamer installation](procedures/3_gstreamer/installation.md) for 
   additional configuration steps.
 ---
 
