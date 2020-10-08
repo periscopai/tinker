@@ -16,19 +16,20 @@ The goal behind this repos is
 The [doc/procedures](doc]/procedures) folder contains a series of how to's and are organized as follow:
 
 - ubuntu-1804
-    - [nvidia](doc/procedures/1_ubuntu_1804/nvidia.md)
+    - [nvidia](doc/procedures/1_ubuntu_1804/nvidia.md) -> [View On Test Space](https://periscopai.testspace.com/spaces/130589/cycles/192/cycle_specs/1963)
 
 - setup
-    - [github](doc/procedures/2_setup/github.md)
+    - [github](doc/procedures/2_setup/github.md) -> [View On Test Space](https://periscopai.testspace.com/spaces/130589/cycles/192/cycle_specs/1964)
+
 
 - gstreamer
-    - [installation](doc/procedures/3_gstreamer/installation.md)
-    - [tutorials](doc/procedures/3_gstreamer/tutorials.md)
+    - [installation](doc/procedures/3_gstreamer/installation.md) -> [View On Test Space](https://periscopai.testspace.com/spaces/130589/cycles/192/cycle_specs/1965)
+    - [tutorials](doc/procedures/3_gstreamer/tutorials.md) -> [View On Test Space](https://periscopai.testspace.com/spaces/130589/cycles/192/cycle_specs/1966)
 - rust
     - [installation](doc/procedures/4_rust/installation.md)
 - vscode
-    - [C++ Configuration](doc/procedures/5_vscode/c++-setup.md)
-    - [Rust Configuration](doc/procedures/5_vscode/rust-setup.md)
+    - [C++ Configuration](doc/procedures/5_vscode/c++-setup.md) -> [View On Test Space](https://periscopai.testspace.com/spaces/130589/cycles/192/cycle_specs/1967)
+    - [Rust Configuration](doc/procedures/5_vscode/rust-setup.md) -> [View On Test Space](https://periscopai.testspace.com/spaces/130589/cycles/192/cycle_specs/1968)
 
 ---
 **Note**
