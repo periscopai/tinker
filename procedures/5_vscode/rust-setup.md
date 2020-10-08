@@ -15,7 +15,7 @@ testspace:
 ---
 NOTE
 
-check the [rust installation](../procedures/4_rust/installation.md) chpater for instructions.
+check the [rust installation](../4_rust/installation.md) chpater for instructions.
 
 ---
 
