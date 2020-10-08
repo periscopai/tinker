@@ -3,9 +3,7 @@ A repos to tinker with Rust and GStreamer
 
 The goal behind this repos is 
 
-- [setting up rust and vscode integration for build and debugging rust code](doc/installing_rust.md)
 - [rust primer](doc/rust_primer.md)
-- [setting up gstreamer](doc/setting_up_gstreamer.md)
 - [creating a basic pipeline in C](doc/gstreamer_c_pipeline.md)
 - [creating a basic pipeline in Rust](doc/gstreamer_rust_pipeline.md)
 - [creating a gstreamer rust plugin](doc/gstreamer_rust_plugin.md)
@@ -33,6 +31,7 @@ The [procedures](procedures) folder contains a series of how to's and are organi
 - rust
 
     Rust installation and tutorials
+    - [installation](procedures/4_rust/installation.md)
 
 - vscode
 

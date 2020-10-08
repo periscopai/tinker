@@ -1,11 +1,9 @@
-# Installing Rust
+---
+testspace:
+---
 
-The purpose of this page is to set up rust and vscode integration for build and debugging rust code
+# Setting Up VS Code for Rust
 
-# Table Of Content
-
-- [Setting up Rust](#setting-up-rust)
-    - [Creating a simple program](#creating-a-simple-program)
 - [VS Code Configuration](#vc-code-configuration)
     - [Required Integrations](#required-integrations)
         - [Rust (Rust Language Server or RLS)](#rust-rust-language-server-or-rls)
@@ -13,51 +11,6 @@ The purpose of this page is to set up rust and vscode integration for build and 
         - [CodeLLDB (Debugger)](#codelldb-debugger)
     - [Configuring the builder](#configuring-the-builder)
     - [Debugging Code](#debugging-code)
-
-# Setting up Rust
-
-Run
-```shell
-$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
-
-Welcome to Rust!
-
-This will download and install the official compiler for the Rust
-programming language, and its package manager, Cargo.
-
-...
-
-The cargo, rustc, rustup and other commands will be added to
-Cargo's bin directory, located at:
-
-  /home/nhd/.cargo/bin
-
-
-1) Proceed with installation (default)
-2) Customize installation
-3) Cancel installation
-
-```
-select option 1
-
-After installation:
-
-- rustup is the rust toolchain installer which allows you to update new releases, etc.
-- rustc is the rust compiler
-- cargo is the Rust package manager (like pip)
-
-## Creating a simple program
-
-```shell
-$ cargo new <package name>
-```
-We created the first package in [rust/explore](../rust/explore) which contains 2 files
-
-- [rust/explore/Cargo.toml](../rust/explore/Cargo.toml) which is the package manifest (very much like setup.toml)
-
-- [rust/explore/src/main.rs](../rust/explore/src/main.rs) very similar to main.c
-
----
 
 # VS Code Configuration
 
@@ -69,17 +22,17 @@ Because Rust support is not built-in VS Code and requires [Custom Task](https://
 but this is most likely about to change since [Microsoft is adopting Rust](https://code.visualstudio.com/docs/editor/tasks#_custom-tasks).
 Why? Because Rust has performance of C++ without the memory safety issues of C++ (~70% of security patches are memory related bugs)
 
-## Required Integrations
+# Required Integrations
 
-### Rust (Rust Language Server or RLS)
+## Rust (Rust Language Server or RLS)
 
 * [Rust on MarketPlace](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust)
 
-### Rust Analyzer
+## Rust Analyzer
 
 * [rust-analyzer on MarketPlace](https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer)
 
-### CodeLLDB (Debugger)
+## CodeLLDB (Debugger)
 
 * [CodeLLDB on MarketPlace](https://marketplace.visualstudio.com/items?itemName=vadimcn.vscode-lldb) from the marketplace.
 * [CodeLLDB User Manual](https://github.com/vadimcn/vscode-lldb/blob/v1.5.3/MANUAL.md)
@@ -122,7 +75,7 @@ json, you can actually insert comments (M$ like to break the rules).
 
 So once this is configured, you can invoke the build using ``ctrl-shit-b``
 
-![rust build](images/vs-code-rust-build.png)
+![rust build](img/vs-code-rust-build.png)
 
 As you can see [here](../.vscode/tasks.json) there is more than one task associated to that package. One to build and one to run. 
 
@@ -184,4 +137,5 @@ So now that we can build stuff, let's debug it. The following is only required t
   can be found under the ``Run`` menu.
 
   
-![rust debug](images/vs-code-rust-debug.png)
+![rust debug](img/vs-code-rust-debug.png)
+
