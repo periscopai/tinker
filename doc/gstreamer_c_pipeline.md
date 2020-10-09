@@ -230,7 +230,9 @@ static void pad_added_handler (GstElement *src, GstPad *new_pad, CustomData *dat
   const gchar *new_pad_type = NULL;
 ```
 
+## Time Management
 
+Time management is the topic of [tutorial 4](https://gstreamer.freedesktop.org/documentation/tutorials/basic/time-management.html) and is used to **query** timing information as well as seeking into a stream.
 
 # Examples
 
