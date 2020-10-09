@@ -230,13 +230,30 @@ static void pad_added_handler (GstElement *src, GstPad *new_pad, CustomData *dat
   const gchar *new_pad_type = NULL;
 ```
 
-
-
 # Examples
+
+## RTSP Pipeline
+
+This application creates a gstreamer pipeline using either the camera as the source 
+or a video file. The data should be decoded (in the case of a file),
+then encoded and sent over RTSP. 
+
+Options:
+
+  - --loop if set, loop over the video source (if applicable)
+  - --time if set, run for the specified amount of time
+  - --frames if set, run and process the specified amount of frames, then exit
+  - --capture-file if specified, the encoded video should be stored on the specified file.
+  - --source-file if specified, the source is set to the specified file. Otherwise defailt 
+
+During this process:
+
+- The number of frames processed should be printed.
+- If a video file input, the content is is demuxed and processed
+ 
 
 Don't forget to refer to the [Gstreamer Lib Documentation]
 
-To be started.
 
 
 [Gstreamer Lib Documentation]: https://gstreamer.freedesktop.org/documentation/libs.html
