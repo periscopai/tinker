@@ -40,3 +40,12 @@ This will clone the [tinker repos]itory onto your machine.
 [tinker repos]: https://github.com/periscopai/tinker 
 [gh manual]: https://cli.github.com/manual/
 [gh repo clone]: https://cli.github.com/manual/gh_repo_clone
+
+## Create a Merge Request
+
+Once you have some commits on a branch, you can create a merge request 
+from the command line.
+
+```shell
+gh pr create
+```
