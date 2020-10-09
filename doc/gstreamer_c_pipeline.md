@@ -10,8 +10,9 @@ C then trying something through Rust.
   - [Cleanup](#cleanup)
   - [Factories](#factories)
   - [Dynamic Pipelining](#dynamic-pipelining)
-  - [gst-inspect](gst-inspect)
-- [Examples](examples)
+  - [gst-inspect](#gst-inspect)
+- [Examples](#examples)
+  - [rtsp pipeline](#rtsp-pipeline)
 
 ---
 REFERENCE
@@ -230,21 +231,54 @@ static void pad_added_handler (GstElement *src, GstPad *new_pad, CustomData *dat
   const gchar *new_pad_type = NULL;
 ```
 
+## Time Management
+
+Time management is the topic of [tutorial 4](https://gstreamer.freedesktop.org/documentation/tutorials/basic/time-management.html) and is used to **query** timing information as well as seeking into a stream.
+
 # Examples
+
+Throughtout those examples, Don't forget to refer to the [Gstreamer Lib Documentation]
+
+---
+**Command Line Processing**
+
+See the [glib option processing](https://developer.gnome.org/glib/stable/glib-Commandline-option-parser.html) documentation for examples. 
+
+You can find the implementation in [gst-rtsp.c](../gstreamer/rtsp/gst-rtsp.c)
+
+---
 
 ## RTSP Pipeline
 
-This application creates a gstreamer pipeline using either the camera as the source 
-or a video file. The data should be decoded (in the case of a file),
-then encoded and sent over RTSP. 
+``` shell
+========================================================
+running target/rls/gst-rtsp --help
+========================================================
+Usage:
+  gst-rtsp [OPTION?] RTSP Pipeline
 
-Options:
+  This application creates a gstreamer pipeline using either the camera
+  as the source or a video file.
+  
+  The data should be decoded (in the case of a file), then encoded and
+  sent over RTSP. 
 
-  - --loop if set, loop over the video source (if applicable)
-  - --time if set, run for the specified amount of time
-  - --frames if set, run and process the specified amount of frames, then exit
-  - --capture-file if specified, the encoded video should be stored on the specified file.
-  - --source-file if specified, the source is set to the specified file. Otherwise defailt 
+Help Options:
+  -h, --help                        Show help options
+  --help-all                        Show all help options
+  --help-gst                        Show GStreamer Options
+
+Application Options:
+  -s, --silent                      do not output status information
+  -l, --loop                        loop over the input file if specified.
+  -t, --time                        if set, run for the specified amount of time - in seconds
+  -f, --frames                      number of frames to streams.
+  -i, --input-file                  [optional] input video file to decode (assumes camera otherwise)
+  -o, --output-file                 [optional] file to capture streamed output
+
+========================================================
+```
+
 
 During this process:
 
@@ -252,7 +286,7 @@ During this process:
 - If a video file input, the content is is demuxed and processed
  
 
-Don't forget to refer to the [Gstreamer Lib Documentation]
+
 
 
 
