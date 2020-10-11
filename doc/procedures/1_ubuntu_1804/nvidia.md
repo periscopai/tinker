@@ -137,6 +137,9 @@ driver and install the new driver.
 
 ## Install TensorRT 7.0
 
+* Before doing any steps make sure that `python` launches the Python 3 interpreter. 
+  If not, you can edit `~/.bash_aliases` file adding `alsias python=python3`.
+
 * Download the Debian package for [TensorRT7.0](https://developer.nvidia.com/nvidia-tensorrt-7x-download).
     You will need to login with you nvidia credentials. Make sure it is 7.0. not 7.1 or 7.2
     ```shell
