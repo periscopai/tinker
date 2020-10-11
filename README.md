@@ -13,7 +13,7 @@ The goal behind this repos is
 
 # Procedures
 
-The [doc/procedures](doc]/procedures) folder contains a series of how to's and are organized as follow:
+The [doc/procedures](doc/procedures) folder contains a series of how to's and are organized as follow:
 
 - ubuntu-1804
     - [nvidia](doc/procedures/1_ubuntu_1804/nvidia.md) -> [View On Test Space](https://periscopai.testspace.com/spaces/130589/cycles/192/cycle_specs/1963)

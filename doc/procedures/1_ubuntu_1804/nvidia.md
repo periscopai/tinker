@@ -25,6 +25,14 @@ It is important that no NVidia driver is installed. Otherwise you will get
 a warning and you will be required to go in recovery mode, uninstall the 
 driver and install the new driver. 
 
+* Here's how to uninstall the exising nvidia driver with cuda and everything.
+    ```
+    sudo apt-get purge nvidia*
+    sudo apt-get autoremove
+    sudo apt-get autoclean
+    sudo rm -rf /usr/local/cuda*
+    ```
+
 * [download the driver 450.51](https://www.nvidia.com/Download/driverResults.aspx/160555/en-us)
 
 * run the command 
@@ -80,8 +88,8 @@ driver and install the new driver.
     ```
 * Pull Version 10.2
     ```
-    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pinsudo 
-    mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+    sudo v cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
     wget http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
     sudo dpkg -i cuda-repo-ubuntu1804-10-2-local-10.2.89-440.33.01_1.0-1_amd64.deb
     sudo apt-key add /var/cuda-repo-10-2-local-10.2.89-440.33.01/7fa2af80.pub
@@ -119,6 +127,13 @@ driver and install the new driver.
     +-----------------------------------------------------------------------------+
 
     ```
+   
+  You may need to install nvidia-cuda-toolkit on your OS with
+    ``` shell
+    $ sudo apt-get install nvidia-cuda-toolkit
+    ```
+
+   And then reboot your system! Just as if it was windows!
 
 ## Install TensorRT 7.0
 
