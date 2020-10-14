@@ -250,6 +250,8 @@ You can find the implementation in [gst-rtsp.c](../gstreamer/rtsp/gst-rtsp.c)
 
 ## RTSP Pipeline
 
+Check the [RTSP Primer](rtsp_primer.md) to make sure you understand RTSP streaming. 
+
 ``` shell
 ========================================================
 running target/rls/gst-rtsp --help
@@ -278,6 +280,36 @@ Application Options:
 
 ========================================================
 ```
+
+
+### Design
+
+- This is based on [Real Time Streaming Tutorial](http://www.einarsundgren.se/gstreamer-basic-real-time-streaming-tutorial/)
+- [Introduction to network streaming using gstreamer](https://developer.ridgerun.com/wiki/index.php/Introduction_to_network_streaming_using_GStreamer)
+- [maybe useful](http://trac.gateworks.com/wiki/Yocto/gstreamer/streaming#rtsp)
+
+With that said, we need to implement the pipeline. Before hardcoding the pipeline, 
+it is a good idea to use gst-launch to understand the elements being used. The following
+use the camera as the source only taking the raw video (VGA) and sends it to the display
+
+
+
+```shell
+gst-launch-1.0 v4l2src device="/dev/video0" ! video/x-raw,width=640,height=480 ! autovideosink
+# If your camera doesn't work you can use a test source
+gst-launch-1.0 videotestsrc ! video/x-raw,width=640,height=480 ! autovideosink
+```
+
+To stream it, it need to be encoded.
+
+```
+ gst-launch-1.0 -vv -m v4l2src device="/dev/video0" ! videobalance saturation=0 ! video/x-raw,width=640,height=480 ! videoconvert ! videoscale ! video/x-raw,width=800,height=600 ! x264enc ! video/x-h264, stream-format=byte-stream ! h264parse config-interval=-1 ! rtph264pay ! udpsink host=127.0.0.1 port=5000
+ 
+ 
+ gst-launch-1.0 -vv -m v4l2src device="/dev/video0" ! videobalance saturation=0 ! video/x-raw,width=640,height=480 ! videoconvert ! videoscale ! video/x-raw,width=800,height=600 ! x264enc ! video/x-h264, stream-format=byte-stream ! mpegtsmux ! rtpmp2tpay ! udpsink host=127.0.0.1 port=5000
+ 
+ ```
+
 
 
 During this process:

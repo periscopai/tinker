@@ -133,6 +133,7 @@ main (int argc, char *argv[])
 terminate:
   g_free(options.input_file);
   g_free(options.output_file);
+  gst_object_unref(aipipeline.pipeline);
 
   if (exit_code){
     g_print(">> we f***** up :(\n");
