@@ -36,6 +36,10 @@ requires some extensions to be installed. Find instructions [here](procedures/5_
 - [Structures](#structures)
   - [Methods](#methods)
     - [Associated Functions](#associated-functions)
+- [Packages, Crates, and Modules](#packages-crates-and-modules)
+    - [Creating a Package](#creating-a-package)
+- [Documenting the code](#Documenting-the-code)
+
 
 # Crate.io
 
@@ -555,4 +559,186 @@ See [Method Syntax](https://doc.rust-lang.org/book/ch05-03-method-syntax.html)
 ### Associated Functions
 
 Basically static methods. Often use as constructors. 
+
+
+# Packages, Crates, and Modules
+
+- A *crate* is a binary or a library library
+- A *package* is a collection of *crates* providing more functionality.
+- A *package* contains a cargo.toml file
+
+To make a parallel with Python, a package is 
+
+- a **Rust Package** is the equivalent of a Python Package (with the toml file)
+- a **Rust Package** must contain at least one crate (python module) that it at most 
+  one library and 0-n binaries.
+- a **Rust Crate** is the equivalent of a python module
+- whereas a [Rust module](https://doc.rust-lang.org/book/ch07-02-defining-modules-to-control-scope-and-privacy.html)
+  is like a C++ namespace.
+
+```
+mod front_of_house {
+    mod hosting {
+        fn add_to_waitlist() {}
+
+        fn seat_at_table() {}
+    }
+
+    mod serving {
+        fn take_order() {}
+
+        fn serve_order() {}
+
+        fn take_payment() {}
+    }
+}
+```
+where create is implicit
+
+```
+crate
+ └── front_of_house
+     ├── hosting
+     │   ├── add_to_waitlist
+     │   └── seat_at_table
+     └── serving
+         ├── take_order
+         ├── serve_order
+         └── take_payment
+
+```  
+
+It is better to read the [paths for referring to an item](https://doc.rust-lang.org/book/ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html) capther for complete details. 
+
+Not unlike python, you can use absolute or relative "import path".
+
+**Items** (e.g. functions) are by definition private. To make them public to *any* code 
+outside the module, you must use the ``pub`` keyworks
+
+``` rust
+    mod my_module {
+        pub mod public {
+            fn public_function() {
+                private_function()
+            }
+        }
+        mod private {
+            fn private_function() {}
+        }
+}
+```
+
+Here is an example
+
+```rust 
+mod back_of_house {
+    pub struct Breakfast {
+        pub toast: String,
+        seasonal_fruit: String,
+    }
+
+    impl Breakfast {
+        pub fn summer(toast: &str) -> Breakfast {
+            Breakfast {
+                toast: String::from(toast),
+                seasonal_fruit: String::from("peaches"),
+            }
+        }
+    }
+}
+
+pub fn eat_at_restaurant() {
+    // Order a breakfast in the summer with Rye toast
+    let mut meal = back_of_house::Breakfast::summer("Rye");
+    // Change our mind about what bread we'd like
+    meal.toast = String::from("Wheat");
+    println!("I'd like {} toast please", meal.toast);
+
+    // The next line won't compile if we uncomment it; we're not allowed
+    // to see or modify the seasonal fruit that comes with the meal
+    // meal.seasonal_fruit = String::from("blueberries");
+}
+
+```
+
+## Creating a Package
+
+```shell
+    :prototype|proto/structure⚡ ⇒  cargo new --lib pai-gst-sequencer 
+        Created library `pai-gst-sequencer` package
+    :prototype|proto/structure⚡ ⇒  tree pai-gst-sequencer 
+    pai-gst-sequencer
+    ├── Cargo.toml
+    └── src
+        └── lib.rs
+
+    1 directory, 2 files
+```
+where ``pai-gst-sequencer`` is the package
+
+```toml
+[package]
+name = "pai-gst-sequencer"
+version = "0.1.0"
+authors = ["Laurent Brack <laurent.brack@gmail.com>"]
+edition = "2020"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+```
+and ``src/lib.rs`` is the **crate root** of a **library** whereas ``src/main.rs`` would 
+be the crate root of a **binary**. You can have a *lib* and a *binary* in the same package. 
+If more than one binary is needed, put the files under ``src/bin``
+
+Note unlike python, crates are name spaces.
+
+More on package and crates [in the official documentation](https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html) 
+
+# Documenting the code
+
+*Rustdoc* uses [markdown](https://commonmark.org/) in the documentation blocks.
+
+In rustdoc parlance, an *item* is anything that can be documentation such as a structure, an enum, a function. 
+All lines starting with ``///`` or ``//!``, place above item, are considering documentation
+
+```rust
+//! I document the current module!
+
+/// I document "Foo"!
+pub struct Foo;
+```
+
+---
+
+**WARNING**
+
+If found out that to document a crate, you must use ``//!`` whereas ``///`` doesn't work. This seem only
+to be applicable at the crate level
+
+```rust
+//! gst-pai-streamer
+//! 
+//! **Author:** Laurent Brack
+//! 
+
+/// Representation of the Sequencer state
+pub enum PAISequencerState {
+    /// The pipeline was created by not initialized
+    CREATED, 
+    /// The pipeline is in error state
+    ERROR,
+    /// pipeline is running
+    RUNNING,
+    /// pipeline is stopped
+    STOPPED,
+}
+
+```
+
+---
+- [Rust Doc]
+- [Guide how to write Rust doc for a crate](https://blog.guillaume-gomez.fr/articles/2020-03-12+Guide+on+how+to+write+documentation+for+a+Rust+crate)
+
+[Rust Doc]: https://doc.rust-lang.org/rustdoc/index.html
 
