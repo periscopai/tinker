@@ -3,6 +3,9 @@
 The goal of this exercise is to create an RTSP server (in Rust/Gstreamer) capable
 of take video from a camera or file source, encoding it and streaming it over RTSP. 
 
+We decided to start with a prototype consisting of a simple gstreamer pipeline 
+written in Rust. You can find the details [here](../prototype/README.md)
+
 ---
 
 **Idea**

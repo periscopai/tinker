@@ -4,6 +4,9 @@
 
 - [Before we start](#before-we-start)
     - [Building the documentation](#building-the-documentation)
+    - [Building the Code](#building-the-code)
+    - [Running](#running)
+
 - [Crates](#crates)
     - [lib.rs](#librs)
 
@@ -52,6 +55,22 @@ cargo doc --open
 # or
 firefox target/doc/pai_gst_sequencer/index.html 
 ```
+
+## Building the code
+
+```
+cd prototype/pai-gst-sequencer
+cargo build
+```
+
+## Running 
+
+```
+cd prototype/pai-gst-sequencer
+cargo run
+```
+
+
 
 ## Documenting the code
 

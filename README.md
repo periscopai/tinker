@@ -6,6 +6,7 @@ The goal behind this repos is
 - [rust primer](doc/rust_primer.md)
 - [creating a basic pipeline in C](doc/gstreamer_c_pipeline.md)
 - [creating a basic pipeline in Rust](doc/gstreamer_rust_pipeline.md)
+    - [The actual prototype](prototype/README.md)
 - [creating a gstreamer rust plugin](doc/gstreamer_rust_plugin.md)
 - [tinkering with the gstreamer rust interface](doc/gstreamer_rust_if.md)
 - [creating a crate](doc/crate.md) (package)
