@@ -7,7 +7,7 @@
 //! It is meant to be a simple interface to gstreamer, implemented in rust and 
 //! which can be extended with Python. 
 //! 
-//! ```
+//! ```text
 //!         +--------------------------+
 //!         |  Rest API     - Python   |
 //!         +--------------------------+
@@ -41,6 +41,8 @@
 /// mark them as derive(Debug) and then 
 /// use a print statement like this
 /// ``` rust
+/// # use pai_gst_sequencer::*;
+/// # let mut sequencer = PAISequencer::new("video");
 /// println!("sequencer state '{:?}'",sequencer.get_state());
 /// ```
 /// more on [stackoverflow](https://stackoverflow.com/questions/28024373/is-there-a-way-to-print-enum-values)
