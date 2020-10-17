@@ -36,6 +36,16 @@
 //! 
 
 /// Representation of the Sequencer state
+/// 
+/// Note that to represent Enum in prints, you need to 
+/// mark them as derive(Debug) and then 
+/// use a print statement like this
+/// ``` rust
+/// println!("sequencer state '{:?}'",sequencer.get_state());
+/// ```
+/// more on [stackoverflow](https://stackoverflow.com/questions/28024373/is-there-a-way-to-print-enum-values)
+#[derive(Debug)]
+#[derive(PartialEq)] // To be able to assert on enum value - see main.rs for details.
 pub enum PAISequencerState {
     /// The pipeline was created by not initialized
     CREATED, 
@@ -69,11 +79,19 @@ impl PAISequencer {
         }
     }
 
-    pub fn start(&self) -> &PAISequencerState {
-        self.get_state()
+    /// starts the sequencer and sets the state to RUNNING
+    /// 
+    /// # Returns:PAISequencerState::RUNNING
+    /// 
+    /// Note that the reference to self is set as mutable as we 
+    /// want to be able to change the state.
+    pub fn start(&mut self) -> &PAISequencerState {
+        self.state = PAISequencerState::RUNNING;
+        &self.state
     }
-    pub fn stop(&self) -> &PAISequencerState {
-        self.get_state()
+    pub fn stop(&mut self) -> &PAISequencerState {
+        self.state = PAISequencerState::STOPPED;
+        &self.state
     }
     ///
     pub fn get_state(&self) -> &PAISequencerState {
