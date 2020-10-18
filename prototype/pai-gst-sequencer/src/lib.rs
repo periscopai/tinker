@@ -1,12 +1,12 @@
 //! gst-pai-streamer
-//! 
+//!
 //! The purpose if this crate is to implement the ``periscopai`` sequencer.
 //! The sequencer is responsible for creating the gstreamer pipeline, installing
-//! the appropriate callbacks for messages and managing the pipeline state. 
-//! 
-//! It is meant to be a simple interface to gstreamer, implemented in rust and 
-//! which can be extended with Python. 
-//! 
+//! the appropriate callbacks for messages and managing the pipeline state.
+//!
+//! It is meant to be a simple interface to gstreamer, implemented in rust and
+//! which can be extended with Python.
+//!
 //! ```text
 //!         +--------------------------+
 //!         |  Rest API     - Python   |
@@ -31,14 +31,14 @@
 //!     |                                 |
 //!     +=================================+
 //! ```
-//! 
+//!
 //! **Author:** Laurent Brack
-//! 
+//!
 
 /// Representation of the Sequencer state
-/// 
-/// Note that to represent Enum in prints, you need to 
-/// mark them as derive(Debug) and then 
+///
+/// Note that to represent Enum in prints, you need to
+/// mark them as derive(Debug) and then
 /// use a print statement like this
 /// ``` rust
 /// # use pai_gst_sequencer::*;
@@ -46,11 +46,10 @@
 /// println!("sequencer state '{:?}'",sequencer.get_state());
 /// ```
 /// more on [stackoverflow](https://stackoverflow.com/questions/28024373/is-there-a-way-to-print-enum-values)
-#[derive(Debug)]
-#[derive(PartialEq)] // To be able to assert on enum value - see main.rs for details.
+#[derive(Debug, PartialEq)] // To be able to assert on enum value - see main.rs for details.
 pub enum PAISequencerState {
     /// The pipeline was created by not initialized
-    CREATED, 
+    CREATED,
     /// The pipeline is in error state
     ERROR,
     /// pipeline is running
@@ -62,9 +61,9 @@ pub enum PAISequencerState {
 // Class Documentation
 //
 /// Periscopai sequence pipeline
-/// 
+///
 /// # Arguments
-/// 
+///
 pub struct PAISequencer {
     /// bla
     input: String,
@@ -72,20 +71,19 @@ pub struct PAISequencer {
     //mut state : bool,
 }
 impl PAISequencer {
-
-    /// Constructor 
+    /// Constructor
     pub fn new(input: &str) -> PAISequencer {
         PAISequencer {
             input: input.to_string(),
-            state: PAISequencerState::CREATED
+            state: PAISequencerState::CREATED,
         }
     }
 
     /// starts the sequencer and sets the state to RUNNING
-    /// 
+    ///
     /// # Returns:PAISequencerState::RUNNING
-    /// 
-    /// Note that the reference to self is set as mutable as we 
+    ///
+    /// Note that the reference to self is set as mutable as we
     /// want to be able to change the state.
     pub fn start(&mut self) -> &PAISequencerState {
         self.state = PAISequencerState::RUNNING;
@@ -104,13 +102,20 @@ impl PAISequencer {
     }
 }
 
-
-
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
+    fn test_states() {
+        let mut sequencer = PAISequencer::new("video");
+        println!("internal state {:?}", sequencer.get_state());
+        assert!(matches!(sequencer.get_state(), PAISequencerState::CREATED));
+        println!("sequencer state after start '{:?}'", sequencer.start());
+        assert!(matches!(sequencer.get_state(), PAISequencerState::RUNNING));
+        println!("sequencer state after stop'{:?}'", sequencer.stop());
+        assert!(matches!(sequencer.get_state(), PAISequencerState::STOPPED));
+
     }
 }
 
