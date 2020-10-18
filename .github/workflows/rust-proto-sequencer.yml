@@ -7,8 +7,8 @@ on:
   push: 
     branches: 
       - '*'
-#    paths:
-#      - prototype/**
+    paths:
+      - './prototype/**'
   pull_request:
     branches: 
       - main
