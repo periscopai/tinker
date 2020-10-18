@@ -121,8 +121,6 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
-<span id="123">123</span>
-<span id="124">124</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! gst-pai-streamer</span>
 <span class="doccomment">//!</span>
@@ -132,8 +130,9 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! It is meant to be a simple interface to gstreamer, implemented in rust and</span>
 <span class="doccomment">//! which can be extended with Python.</span>
-<span class="doccomment">//! </span>
-<span class="doccomment">//! The python extension should be available [periscopai/dev]([devpi index](https://m.devpi.net/periscopai/dev))</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The python extension should be available [periscopai/dev](https://m.devpi.net/periscopai/dev)</span>
+<span class="doccomment">//! on devpi.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```text</span>
 <span class="doccomment">//!         +--------------------------+</span>
@@ -243,10 +242,7 @@
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">sequencer</span>.<span class="ident">state</span>(), <span class="ident">PAISequencerState</span>::<span class="ident">RUNNING</span>));
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;sequencer state after stop&#39;{:?}&#39;&quot;</span>, <span class="ident">sequencer</span>.<span class="ident">stop</span>());
         <span class="macro">assert</span><span class="macro">!</span>(<span class="macro">matches</span><span class="macro">!</span>(<span class="ident">sequencer</span>.<span class="ident">state</span>(), <span class="ident">PAISequencerState</span>::<span class="ident">STOPPED</span>));
-
     }
 }
-
-
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "pai_gst_sequencer";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
