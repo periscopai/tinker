@@ -5,8 +5,8 @@ name: Rust AI Sequencer Prototype
 
 on:
   push: 
-    paths:
-      - 'prototype/**'
+#    paths:
+#      - 'prototype/**'
   pull_request:
     branches: [ main ]
     paths:
