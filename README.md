@@ -1,6 +1,8 @@
 # tinker
 A repos to tinker with Rust and GStreamer
 
+[API Documentation](https://periscopai.github.io/tinker/pai_gst_sequencer/index.html)
+
 The goal behind this repos is 
 
 - [rust primer](doc/rust_primer.md)
