@@ -17,24 +17,24 @@ fn main() {
     // not be able to modify its attributes
     let mut sequencer = PAISequencer::new(&input);
 
-    println!("sequencer state '{:?}'", sequencer.get_state());
+    println!("sequencer state '{:?}'", sequencer.state());
     println!("starting the sequencer");
     let state = sequencer.start();
     println!("state returned {:?}", state);
-    assert!(matches!(sequencer.get_state(), PAISequencerState::RUNNING));
+    assert!(matches!(sequencer.state(), PAISequencerState::RUNNING));
     // This is interesting
     // The following would generate a compilation error rustc(E0502)
-    // println!("state returned {:?}=={:?}", state, sequencer.get_state());
+    // println!("state returned {:?}=={:?}", state, sequencer.state());
     // But if we left state go out of scope (not using it after the previous
     // statement), the sequencer regained the borrowed ownership.
-    println!("internal state {:?}", sequencer.get_state());
+    println!("internal state {:?}", sequencer.state());
     println!("stopping the sequencer");
     println!("sequencer state '{:?}'", sequencer.stop());
     // Here I have no idea why this works. Basically you can not do something like
-    // assert!(sequencer.get_state() ==  PAISequencerState::STOPPED);
+    // assert!(sequencer.state() ==  PAISequencerState::STOPPED);
     // The compiler gives you an error. I found the solution below in stackoverflow
     // but don't understand it
-    assert!(matches!(sequencer.get_state(), PAISequencerState::STOPPED));
+    assert!(matches!(sequencer.state(), PAISequencerState::STOPPED));
     println!("This is the end of the pathetic piece of code.")
 }
 
