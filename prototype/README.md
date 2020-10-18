@@ -12,6 +12,7 @@
     - [lib.rs](#librs)
 
 [API Documentation](https://periscopai.github.io/tinker/pai_gst_sequencer/index.html)
+Devpi Index: https://m.devpi.net/periscopai/dev
 
 
 The goal of this prototype is to build the software stack vertically 
