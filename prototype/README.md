@@ -11,6 +11,9 @@
 - [Crates](#crates)
     - [lib.rs](#librs)
 
+[API Documentation](https://periscopai.github.io/tinker/pai_gst_sequencer/index.html)
+
+
 The goal of this prototype is to build the software stack vertically 
 to ensure that all layers can be integrated.
 
