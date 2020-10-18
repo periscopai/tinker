@@ -43,7 +43,7 @@
 /// ``` rust
 /// # use pai_gst_sequencer::*;
 /// # let mut sequencer = PAISequencer::new("video");
-/// println!("sequencer state '{:?}'",sequencer.get_state());
+/// println!("sequencer state '{:?}'",sequencer.state());
 /// ```
 /// more on [stackoverflow](https://stackoverflow.com/questions/28024373/is-there-a-way-to-print-enum-values)
 #[derive(Debug, PartialEq)] // To be able to assert on enum value - see main.rs for details.
@@ -94,10 +94,10 @@ impl PAISequencer {
         &self.state
     }
     ///
-    pub fn get_state(&self) -> &PAISequencerState {
+    pub fn state(&self) -> &PAISequencerState {
         &self.state
     }
-    pub fn get_input(&self) -> &String {
+    pub fn input(&self) -> &String {
         &self.input
     }
 }
@@ -109,12 +109,12 @@ mod tests {
     #[test]
     fn test_states() {
         let mut sequencer = PAISequencer::new("video");
-        println!("internal state {:?}", sequencer.get_state());
-        assert!(matches!(sequencer.get_state(), PAISequencerState::CREATED));
+        println!("internal state {:?}", sequencer.state());
+        assert!(matches!(sequencer.state(), PAISequencerState::CREATED));
         println!("sequencer state after start '{:?}'", sequencer.start());
-        assert!(matches!(sequencer.get_state(), PAISequencerState::RUNNING));
+        assert!(matches!(sequencer.state(), PAISequencerState::RUNNING));
         println!("sequencer state after stop'{:?}'", sequencer.stop());
-        assert!(matches!(sequencer.get_state(), PAISequencerState::STOPPED));
+        assert!(matches!(sequencer.state(), PAISequencerState::STOPPED));
 
     }
 }
