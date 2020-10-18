@@ -19,4 +19,6 @@ jobs:
     - name: Build
       run: cargo build --verbose --manifest-path prototype/pai-gst-sequencer/Cargo.toml
     - name: Run tests
-      run: cargo test --verbose --manifest-path prototype/pai-gst-sequencer/Cargo.toml
+      run: cargo test --verbose --manifest-path prototype/pai-gst-sequencer/Cargo.toml      
+    - name: Build Docs
+      run: cargo doc --manifest-path prototype/pai-gst-sequencer/Cargo.toml --target-dir docs
