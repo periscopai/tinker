@@ -6,7 +6,6 @@ name: GStreamer Examples
 # events but only for the main branch
 on:
   push:
-    branches: [ main ]
     paths:
       - 'gstreamers/**'
   pull_request:
