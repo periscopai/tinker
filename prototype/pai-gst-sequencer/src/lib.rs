@@ -6,6 +6,8 @@
 //!
 //! It is meant to be a simple interface to gstreamer, implemented in rust and
 //! which can be extended with Python.
+//! 
+//! The python extension should be available [periscopai/dev]([devpi index](https://m.devpi.net/periscopai/dev))
 //!
 //! ```text
 //!         +--------------------------+
