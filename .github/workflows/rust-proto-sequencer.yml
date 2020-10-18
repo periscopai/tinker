@@ -5,12 +5,15 @@ name: Rust AI Sequencer Prototype
 
 on:
   push: 
-#    paths:
-#      - 'prototype/**'
-  pull_request:
-    branches: [ main ]
+    branches: 
+      - *
     paths:
-      - 'prototype/**'
+      - prototype/**
+  pull_request:
+    branches: 
+      - main
+    paths:
+      - prototype/**
 
 env:
   CARGO_TERM_COLOR: always
