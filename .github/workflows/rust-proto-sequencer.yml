@@ -1,0 +1,43 @@
+# This workflow only runs on any sequencer prototype changes
+# 
+# Author: Laurent Brack
+name: Rust AI Sequencer Prototype 
+
+on:
+  push: 
+    paths:
+      - 'prototype/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'prototype/**'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    runs-on: ubuntu-18.04
+    env:
+      working-directory: prototype/pai-gst-sequencer
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build
+      run: cargo build --verbose
+      working-directory: ${{env.working-directory}}
+
+    - name: Run tests
+      run: cargo test --verbose 
+      working-directory: ${{env.working-directory}}
+
+    - name: Build Docs
+      run: cargo doc  --target-dir ../../docs
+      working-directory: ${{env.working-directory}}
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs/doc
