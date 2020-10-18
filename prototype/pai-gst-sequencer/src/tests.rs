@@ -1,3 +1,4 @@
+//! This is a comment
 mod tests {
     #[test]
     fn integration_tests() {
