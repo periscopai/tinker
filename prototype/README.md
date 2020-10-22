@@ -61,23 +61,36 @@ $ git clone https://github.com/sdroege/gstreamer-rs.git
 ```
 As it contains a few examples we can inspire ourselves from. 
 
+There is a simple [Makefile](Makefile) which has the following targets
+
+```shell
+  :prototype|proto/command-line-args⚡ ⇒  make
+  Build system for the periscopai proto
+  Targets
+  -------
+  setup   - installs the required dependencies
+  build   - builds the code
+  run     - builds and runs
+  doc     - builds documentation and show the output
+  test    - runs the test
+  clean   - cleans the build targets
+```
+
+First run the ``make install`` target (only needed once) to install the dependencies.
+
 
 ## Building the documentation
 
 ```shell
-cd prototype/pai-gst-sequencer
-cargo doc
-# To view the documentation
-cargo doc --open
-# or
-firefox target/doc/pai_gst_sequencer/index.html 
+cd prototype
+make doc show-doc=yes
 ```
 
 ## Building the code
 
 ```shell
-cd prototype/pai-gst-sequencer
-cargo build
+cd prototype
+build build
 ```
 
 ## Testing
@@ -85,7 +98,7 @@ cargo build
 I haven't quite figure out how to write tests. To run them however, type
 
 ```shell
-:pai-gst-sequencer|proto/structure⚡ ⇒  cargo test      
+:prototype:proto/structure⚡ ⇒  make test      
    Compiling pai-gst-sequencer v0.1.0 (/home/laurent/periscopai/tinker/prototype/pai-gst-sequencer)
     Finished test [unoptimized + debuginfo] target(s) in 0.18s
      Running target/debug/deps/pai_gst_sequencer-0dd1e86d0dee26aa
@@ -141,11 +154,9 @@ documentation.
 ## Running 
 
 ```
-cd prototype/pai-gst-sequencer
-cargo run
+cd prototype
+make run
 ```
-
-
 
 ## Documenting the code
 
