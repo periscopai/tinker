@@ -48,7 +48,19 @@ to ensure that all layers can be integrated.
 
 # Before we start
 
-Things will be moving pretty fast as we make progress so keep an eye on the documentation. 
+Things will be moving pretty fast as we make progress so keep an eye on the documentation.
+
+Make sure to install the dependencies account to the [gstreamer version found on crates.io](https://crates.io/crates/gstreamer#installation-linux)
+
+Also, I recomment that you clone the [gstreamer-rs project](https://github.com/sdroege/gstreamer-rs.git)
+
+```shell
+$ gh repo clone sdroege/gstreamer-rs
+or 
+$ git clone https://github.com/sdroege/gstreamer-rs.git
+```
+As it contains a few examples we can inspire ourselves from. 
+
 
 ## Building the documentation
 
