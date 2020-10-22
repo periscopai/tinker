@@ -6,12 +6,44 @@
 /// If we had defined an additional module, we would have added
 /// the module name in the use statement
 //use pai_gst_sequencer::PAISequencer;
+use std::{thread, time};
+use clap::{App, Arg};
 use pai_gst_sequencer::*;
+
+const GST_INPUT:&str = "test-source";
+const GST_OUTPUT:&str = "display";
 
 /// This is the main function
 fn main() {
-    let input = String::from("video");
-    println!("creating AI sequencer with input '{}'", input);
+    let matches = App::new("pai-gst-sequencer")
+        .version("1.0.0.dev1")
+        .author("Laurent Brack <laurent.brack@gmail.com>")
+        .about("harness to work with the AI squenecer")
+        .arg(
+            Arg::with_name("input")
+                .short("i")
+                .long("input")
+                .required(false)
+                .value_name("INPUT")
+                // TODO: format! returns a std::string whereas help take str - fixed it using &. Don't know why
+                .help(&format!("sequencer input - see documentation for valid values - defaults to '{}'", GST_INPUT))
+                .takes_value(true),
+        )
+        .arg(
+            Arg::with_name("output")
+                .short("o")
+                .long("output")
+                .required(false)
+                .value_name("OUTPUT")
+                .help(&format!("sequencer output - see documentation for valid values - defaults to '{}'", GST_OUTPUT))
+                .takes_value(true),
+        )
+        .get_matches();
+
+    let input = matches.value_of("input").unwrap_or(GST_INPUT);
+    let output = matches.value_of("input").unwrap_or(GST_OUTPUT);
+
+    println!("creating AI sequencer with input '{}' and '{}'", input, output);
 
     // We define the sequencer as mutable otherwise methods would
     // not be able to modify its attributes
@@ -22,6 +54,10 @@ fn main() {
     let state = sequencer.start();
     println!("state returned {:?}", state);
     assert!(matches!(sequencer.state(), PAISequencerState::RUNNING));
+
+    println!("sleeping for 5 seconds");
+    thread::sleep(time::Duration::from_millis(5000));
+
     // This is interesting
     // The following would generate a compilation error rustc(E0502)
     // println!("state returned {:?}=={:?}", state, sequencer.state());
