@@ -40,7 +40,7 @@ jobs:
       working-directory: ${{env.working-directory}}
 
     - name: Build Docs
-      run: make doc target-dir ../../docs
+      run: make doc doc-dir=../../docs
       working-directory: ${{env.working-directory}}
 
     - name: Deploy
