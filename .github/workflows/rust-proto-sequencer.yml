@@ -60,11 +60,5 @@ jobs:
         if: always()        
 
       - name: Build Docs
-        run: make doc doc-dir=../../docs
+        run: make doc doc-dir=../../autogen
         working-directory: ${{env.working-directory}}
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/doc
