@@ -1,0 +1,13 @@
+(function() {var implementors = {};
+implementors["clap"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
+implementors["futures_channel"] = [{"text":"impl Error for SendError","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;Any&gt; Error for TrySendError&lt;T&gt;","synthetic":false,"types":[]},{"text":"impl Error for TryRecvError","synthetic":false,"types":[]},{"text":"impl Error for Canceled","synthetic":false,"types":[]}];
+implementors["futures_executor"] = [{"text":"impl Error for EnterError","synthetic":false,"types":[]}];
+implementors["futures_task"] = [{"text":"impl Error for SpawnError","synthetic":false,"types":[]}];
+implementors["futures_util"] = [{"text":"impl Error for Aborted","synthetic":false,"types":[]}];
+implementors["glib"] = [{"text":"impl Error for Error","synthetic":false,"types":[]},{"text":"impl Error for BoolError","synthetic":false,"types":[]},{"text":"impl Error for GetError","synthetic":false,"types":[]}];
+implementors["gstreamer"] = [{"text":"impl Error for ErrorMessage","synthetic":false,"types":[]},{"text":"impl Error for LoggableError","synthetic":false,"types":[]},{"text":"impl&lt;'name&gt; Error for GetError&lt;'name&gt;","synthetic":false,"types":[]},{"text":"impl Error for StateChangeError","synthetic":false,"types":[]},{"text":"impl Error for FlowError","synthetic":false,"types":[]},{"text":"impl Error for PadLinkError","synthetic":false,"types":[]},{"text":"impl Error for ClockError","synthetic":false,"types":[]},{"text":"impl Error for TagError","synthetic":false,"types":[]},{"text":"impl Error for IteratorError","synthetic":false,"types":[]},{"text":"impl Error for TryFromGenericFormattedValueError","synthetic":false,"types":[]},{"text":"impl Error for TryPercentFromFloatError","synthetic":false,"types":[]},{"text":"impl Error for FlowError","synthetic":false,"types":[]}];
+implementors["proc_macro2"] = [{"text":"impl Error for LexError","synthetic":false,"types":[]}];
+implementors["serde"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
+implementors["syn"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
+implementors["toml"] = [{"text":"impl Error for Error","synthetic":false,"types":[]},{"text":"impl Error for Error","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

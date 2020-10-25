@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["glib"] = [];
+implementors["gstreamer"] = [{"text":"impl ErrorDomain for CoreError","synthetic":false,"types":[]},{"text":"impl ErrorDomain for LibraryError","synthetic":false,"types":[]},{"text":"impl ErrorDomain for ParseError","synthetic":false,"types":[]},{"text":"impl ErrorDomain for PluginError","synthetic":false,"types":[]},{"text":"impl ErrorDomain for ResourceError","synthetic":false,"types":[]},{"text":"impl ErrorDomain for StreamError","synthetic":false,"types":[]},{"text":"impl ErrorDomain for URIError","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

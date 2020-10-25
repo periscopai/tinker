@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["GetError",""]],"struct":[["Builder",""],["FieldIterator",""],["Iter",""],["Structure",""],["StructureRef",""]]});

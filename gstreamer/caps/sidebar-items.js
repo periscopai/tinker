@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["AnyFeatures",""],["HasFeatures",""],["NoFeature",""],["SomeFeatures",""]],"struct":[["Builder",""],["BuilderFull",""],["Caps",""],["CapsRef",""],["Iter",""],["IterFeatures",""],["IterFeaturesMut",""],["IterMut",""]]});

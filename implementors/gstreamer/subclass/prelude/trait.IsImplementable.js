@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["gstreamer"] = [{"text":"impl&lt;T:&nbsp;ObjectSubclass + ChildProxyImpl&gt; IsImplementable&lt;T&gt; for ChildProxy","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;ObjectSubclass + PresetImpl&gt; IsImplementable&lt;T&gt; for Preset","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;ObjectSubclass + TagSetterImpl&gt; IsImplementable&lt;T&gt; for TagSetter","synthetic":false,"types":[]},{"text":"impl&lt;T:&nbsp;ObjectSubclass + URIHandlerImpl&gt; IsImplementable&lt;T&gt; for URIHandler","synthetic":false,"types":[]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

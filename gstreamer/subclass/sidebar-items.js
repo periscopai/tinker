@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["MAJOR_VERSION",""],["MINOR_VERSION",""]],"enum":[["FlowError",""]],"mod":[["prelude",""]],"struct":[["ElementInstanceStruct",""]],"trait":[["PanicPoison",""]]});

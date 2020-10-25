@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Iterated",""],["Standalone",""]],"struct":[["Meta",""],["MetaRef",""],["MetaRefMut",""],["ParentBufferMeta",""],["ProtectionMeta",""]],"trait":[["MetaAPI",""]]});
