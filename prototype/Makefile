@@ -8,23 +8,38 @@ ifneq ($(doc-dir),)
 	_target-dir = --target-dir $(doc-dir)
 endif
 
+ifeq ($(verbose),yes)
+	_verbose = "--verbose"
+endif
+
 ifeq ($(show-doc),yes)
 	_show-doc = "--open"
 endif
 
+ifeq ($(CI),true)
+	XUNIT_REPORT=-- -Z unstable-options --format json | cargo2junit | tee results.xml
+endif
+
 help:
-	@echo Build system for the periscopai proto
+	@echo BUILD SYSTEM FOR THE PERISCOPAI PROTO
+	@echo
+	@echo Global Options:
+	@echo
+	@echo "    verbose=yes - turns verbosity a notch"
+	@echo
 	@echo Targets
 	@echo -------
-	@echo "setup   - installs the required dependencies"
-	@echo "build   - builds the code"
-	@echo "run     - builds and runs"
-	@echo "doc     - builds documentation and show the output doc-dir=$(doc-dir)"
-	@echo "          options:"
+	@echo "setup    - installs the required dependencies"
+	@echo "precheck - format, build and test the code prior to checkin"
+	@echo "build    - builds the code"
+	@echo "run      - builds and runs"
+	@echo "fmt      - reformat code ... similar to Python black"
+	@echo "doc      - builds documentation and show the output doc-dir=$(doc-dir)"
+	@echo "           options:"
 	@echo "              doc-dir=<path>    optional - location to store the doc"
 	@echo "              show-doc=yes      optional - open doc in browser"
-	@echo "test    - runs the test"
-	@echo "clean   - cleans the build targets"
+	@echo "test     - runs the test"
+	@echo "clean    - cleans the build targets"
 
 .PHONY: setup
 setup:
@@ -35,20 +50,29 @@ setup:
 
 .PHONY: build
 build:
-	cargo $@  --verbose ${CARGO_MANIFEST}
+	cargo $@  $(_verbose) ${CARGO_MANIFEST}
+
+
+.PHONY: fmt
+fmt:
+	cargo $@  $(_verbose) ${CARGO_MANIFEST}
 
 .PHONY: run
 run:
-	cargo $@  --verbose ${CARGO_MANIFEST}
+	cargo $@  $(_verbose) ${CARGO_MANIFEST}
 
 .PHONY: doc
 doc:
-	cargo  --verbose $@ ${CARGO_MANIFEST} $(_target-dir) $(_show-doc)
+	cargo  $(_verbose) $@ ${CARGO_MANIFEST} $(_target-dir) $(_show-doc)
 
 .PHONY: test
 test:
-	cargo  --verbose $@ ${CARGO_MANIFEST}
+	cargo  $(_verbose) $@ ${CARGO_MANIFEST} $(XUNIT_REPORT)
 
 .PHONY: clean
 clean:
 	cargo $@ ${CARGO_MANIFEST}	
+
+.PHONY: precheck
+precheck: clean fmt test doc
+	git status

@@ -2,16 +2,16 @@
 //! This obviously doesn't do anything meaning full
 //!
 
+use clap::{App, Arg};
+use pai_gst_sequencer::*;
 /// We use the object which is in the same crate.
 /// If we had defined an additional module, we would have added
 /// the module name in the use statement
 //use pai_gst_sequencer::PAISequencer;
 use std::{thread, time};
-use clap::{App, Arg};
-use pai_gst_sequencer::*;
 
-const GST_INPUT:&str = "test-source";
-const GST_OUTPUT:&str = "display";
+const GST_INPUT: &str = "test-source";
+const GST_OUTPUT: &str = "display";
 
 /// This is the main function
 fn main() {
@@ -26,7 +26,10 @@ fn main() {
                 .required(false)
                 .value_name("INPUT")
                 // TODO: format! returns a std::string whereas help take str - fixed it using &. Don't know why
-                .help(&format!("sequencer input - see documentation for valid values - defaults to '{}'", GST_INPUT))
+                .help(&format!(
+                    "sequencer input - see documentation for valid values - defaults to '{}'",
+                    GST_INPUT
+                ))
                 .takes_value(true),
         )
         .arg(
@@ -35,7 +38,10 @@ fn main() {
                 .long("output")
                 .required(false)
                 .value_name("OUTPUT")
-                .help(&format!("sequencer output - see documentation for valid values - defaults to '{}'", GST_OUTPUT))
+                .help(&format!(
+                    "sequencer output - see documentation for valid values - defaults to '{}'",
+                    GST_OUTPUT
+                ))
                 .takes_value(true),
         )
         .get_matches();
@@ -43,7 +49,10 @@ fn main() {
     let input = matches.value_of("input").unwrap_or(GST_INPUT);
     let output = matches.value_of("input").unwrap_or(GST_OUTPUT);
 
-    println!("creating AI sequencer with input '{}' and '{}'", input, output);
+    println!(
+        "creating AI sequencer with input '{}' and '{}'",
+        input, output
+    );
 
     // We define the sequencer as mutable otherwise methods would
     // not be able to modify its attributes

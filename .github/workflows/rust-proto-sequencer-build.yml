@@ -1,0 +1,65 @@
+# This workflow only runs on any sequencer prototype changes
+# 
+# Author: Laurent Brack
+name: AI Sequencer Proto Rust Build
+
+on:
+  push: 
+    paths:
+      - 'prototype/**'
+  pull_request:
+    branches: 
+      - main
+    paths:
+      - 'prototype/**'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  check:
+    runs-on: ubuntu-18.04
+    env:
+      working-directory: prototype
+
+    steps:
+
+      - uses: actions/checkout@v2      
+
+      - uses: testspace-com/setup-testspace@v1
+        with:
+          domain: periscopai
+          token: ${{ secrets.TESTSPACE_TOKEN }}    
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+          components: rustfmt, rust-src
+
+      - name: install other dependencies
+        run: |
+          sudo apt-get install build-essential gdb pkg-config
+          make setup
+          cargo install cargo2junit
+        working-directory: ${{env.working-directory}}
+
+      - name: Build
+        run: make build
+        working-directory: ${{env.working-directory}}
+
+      - name: Run tests
+        run: make test
+        working-directory: ${{env.working-directory}}
+
+      - name: Push results to Testspace server
+        run: |
+          testspace results.xml
+        working-directory: ${{env.working-directory}}
+        if: always()        
+
+      - name: Build Docs
+        run: make doc doc-dir=../../autogen
+        working-directory: ${{env.working-directory}}

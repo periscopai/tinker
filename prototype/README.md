@@ -7,6 +7,10 @@
     - [Building the Code](#building-the-code)
     - [Testing](#testing)
     - [Running](#running)
+    - [CI](#ci)
+    - [Documenting the code](#documenting-the-code)
+
+- [Python Extensions](#python-extensions)
 
 - [Crates](#crates)
     - [lib.rs](#librs)
@@ -47,6 +51,14 @@ to ensure that all layers can be integrated.
 ```
 
 # Before we start
+
+---
+
+**IMPORTANT**
+
+Before checking in, allways run ``make precheck``. This will perform a clean, reformat 
+the code, build it, run the tests and build the documentation.
+---
 
 Things will be moving pretty fast as we make progress so keep an eye on the documentation.
 
@@ -90,7 +102,7 @@ make doc show-doc=yes
 
 ```shell
 cd prototype
-build build
+make build
 ```
 
 ## Testing
@@ -157,6 +169,22 @@ documentation.
 cd prototype
 make run
 ```
+
+## CI
+
+There are two gitlab workflows
+
+- [.github/workflows/rust-proto-sequencer-build.yml](../../.github/workflows/rust-proto-sequencer-build.yml) drive the 
+CI upon check ins and merge requests. 
+  - [Testspace GitHub Action](https://github.com/testspace-com/setup-testspace) for testspace integration.
+
+
+- [.github/workflows/rust-proto-sequencer-doc.yml](../../.github/workflows/rust-proto-sequencer-doc.yml) publishes 
+  documentation on merge requests. The document is available at https://periscopai.github.io/tinker/pai_gst_sequencer.
+  We are currently building with all dependencies so that we can peruse through dependency documentaiton as well. 
+  - [Rust Toolchain Action](https://github.com/actions-rs/toolchain) for installing the nightly toolchain.
+  - [GitHub IO Pages Action](https://github.com/peaceiris/actions-gh-pages) to publish our doc on GitHub Pages.
+
 
 ## Documenting the code
 
