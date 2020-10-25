@@ -24,10 +24,8 @@ jobs:
 
     steps:
 
-      - name: Checkout
       - uses: actions/checkout@v2      
 
-      - name: Use Testspace Action
       - uses: testspace-com/setup-testspace@v1
           with:
             domain: periscopai
