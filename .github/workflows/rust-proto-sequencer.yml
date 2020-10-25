@@ -43,6 +43,7 @@ jobs:
         run: |
           sudo apt-get install build-essential gdb pkg-config
           make setup
+          cargo install cargo2junit
         working-directory: ${{env.working-directory}}
 
       - name: Build
