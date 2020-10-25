@@ -4,7 +4,7 @@
 name: AI Sequencer Proto Rust Doc
 
 on:
-  pull_request:
+  push:
     branches: 
       - main
     paths:
