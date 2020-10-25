@@ -81,27 +81,31 @@ pub struct PAISequencer {
 impl PAISequencer {
     /// Constructor
     pub fn new(input: &str) -> PAISequencer {
-      
         // Initialize GStreamer
-        gst::init().unwrap();  
+        gst::init().unwrap();
         let instance = PAISequencer {
             input: input.to_string(),
             state: PAISequencerState::CREATED,
             source: gst::ElementFactory::make("videotestsrc", Some("source"))
-            .expect("Could not create source element."),
+                .expect("Could not create source element."),
             sink: gst::ElementFactory::make("autovideosink", Some("sink"))
-            .expect("Could not create sink element"),
-            pipeline:gst::Pipeline::new(Some("test-pipeline")),
+                .expect("Could not create sink element"),
+            pipeline: gst::Pipeline::new(Some("test-pipeline")),
         };
         // Build the pipeline
-        instance.pipeline.add_many(&[&instance.source, &instance.sink]).unwrap();
-        instance.source.link(&instance.sink).expect("Elements could not be linked.");
+        instance
+            .pipeline
+            .add_many(&[&instance.source, &instance.sink])
+            .unwrap();
+        instance
+            .source
+            .link(&instance.sink)
+            .expect("Elements could not be linked.");
 
         // Modify the source's properties
         instance.source.set_property_from_str("pattern", "smpte");
 
         instance
-
     }
 
     /// starts the sequencer and sets the state to RUNNING
@@ -141,13 +145,12 @@ impl PAISequencer {
     }
     pub fn stop(&mut self) -> &PAISequencerState {
         self.state = PAISequencerState::STOPPED;
-        
+
         self.pipeline
-        .set_state(gst::State::Null)
-        .expect("Unable to set the pipeline to the `Null` state");
+            .set_state(gst::State::Null)
+            .expect("Unable to set the pipeline to the `Null` state");
 
         &self.state
-
     }
     ///
     pub fn state(&self) -> &PAISequencerState {
@@ -160,8 +163,8 @@ impl PAISequencer {
 
 #[cfg(test)]
 mod tests {
-    use std::{thread, time};
     use super::*;
+    use std::{thread, time};
 
     #[test]
     fn test_states() {
@@ -171,7 +174,7 @@ mod tests {
         println!("sequencer state after start '{:?}'", sequencer.start());
         assert!(matches!(sequencer.state(), PAISequencerState::RUNNING));
         println!("sleeping for 2 seconds");
-        thread::sleep(time::Duration::from_millis(2000));        
+        thread::sleep(time::Duration::from_millis(2000));
         println!("sequencer state after stop'{:?}'", sequencer.stop());
         assert!(matches!(sequencer.state(), PAISequencerState::STOPPED));
     }

@@ -48,6 +48,14 @@ to ensure that all layers can be integrated.
 
 # Before we start
 
+---
+
+**IMPORTANT**
+
+Before checking in, allways run ``make precheck``. This will perform a clean, reformat 
+the code, build it, run the tests and build the documentation.
+---
+
 Things will be moving pretty fast as we make progress so keep an eye on the documentation.
 
 Make sure to install the dependencies account to the [gstreamer version found on crates.io](https://crates.io/crates/gstreamer#installation-linux)
@@ -90,7 +98,7 @@ make doc show-doc=yes
 
 ```shell
 cd prototype
-build build
+make build
 ```
 
 ## Testing
@@ -157,6 +165,13 @@ documentation.
 cd prototype
 make run
 ```
+
+## CI
+
+The [.github/workflows/rust-proto-sequencer.yml](../../.github/workflows/rust-proto-sequencer.yml) drive the 
+CI upon check ins and merge request. 
+
+- [Testspace GitHub Action](https://github.com/testspace-com/setup-testspace)
 
 ## Documenting the code
 

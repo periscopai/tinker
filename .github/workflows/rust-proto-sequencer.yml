@@ -23,28 +23,49 @@ jobs:
       working-directory: prototype
 
     steps:
-    - uses: actions/checkout@v2
 
-    - name: install dependencies
-      run: |
-        sudo apt-get install build-essential gdb pkg-config
-        make setup
-      working-directory: ${{env.working-directory}}
+      - name: Checkout
+      - uses: actions/checkout@v2      
 
-    - name: Build
-      run: make build
-      working-directory: ${{env.working-directory}}
+      - name: Use Testspace Action
+      - uses: testspace-com/setup-testspace@v1
+          with:
+            domain: periscopai
+            token: ${{ secrets.TESTSPACE_TOKEN }}    
 
-    - name: Run tests
-      run: make test
-      working-directory: ${{env.working-directory}}
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+          override: true
+          components: rustfmt, rust-src
 
-    - name: Build Docs
-      run: make doc doc-dir=../../docs
-      working-directory: ${{env.working-directory}}
+      - name: install other dependencies
+        run: |
+          sudo apt-get install build-essential gdb pkg-config
+          make setup
+        working-directory: ${{env.working-directory}}
 
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/doc
+      - name: Build
+        run: make build
+        working-directory: ${{env.working-directory}}
+
+      - name: Run tests
+        run: make test
+        working-directory: ${{env.working-directory}}
+
+      - name: Push result to Testspace server
+        run: |
+          testspace results.xml
+        if: always()        
+
+      - name: Build Docs
+        run: make doc doc-dir=../../docs
+        working-directory: ${{env.working-directory}}
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/doc

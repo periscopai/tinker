@@ -9,3 +9,6 @@ edition = "2018"
 [dependencies]
 clap = "2.33.3"
 gstreamer = "0.16.4"
+
+[dev-dependencies]
+cargo2junit = "0.1.6"
