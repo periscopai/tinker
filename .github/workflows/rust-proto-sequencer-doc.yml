@@ -1,17 +1,17 @@
 # This workflow only runs on any sequencer prototype changes
 # 
 # Author: Laurent Brack
-name: Rust AI Sequencer Prototype 
+name: Rust AI Sequencer Prototype Doc 
 
 on:
   push: 
     paths:
       - 'prototype/**'
-  # pull_request:
-  #   branches: 
-  #     - main
-  #   paths:
-  #     - 'prototype/**'
+  pull_request:
+    branches: 
+      - main
+    paths:
+      - 'prototype/**'
 
 env:
   CARGO_TERM_COLOR: always
