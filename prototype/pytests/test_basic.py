@@ -2,7 +2,7 @@ import time
 import pytest
 import pai_gst_sequencer
 
-@pytest.yield_fixture()
+@pytest.fixture
 def ai_sequencer():
     seq = pai_gst_sequencer.PAISequencer("whatever") # Right now we don't process the source.
     yield seq
