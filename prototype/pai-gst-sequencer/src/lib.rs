@@ -50,7 +50,17 @@
 /// ```
 /// more on [stackoverflow](https://stackoverflow.com/questions/28024373/is-there-a-way-to-print-enum-values)
 extern crate gstreamer as gst;
+extern crate pyo3;
 use gst::prelude::*;
+use pyo3::prelude::*;
+
+/// A Python module implemented in Rust.
+#[pymodule]
+#[allow(unused_variables)]
+fn pai_gst_sequencer(py: Python, m: &PyModule) -> PyResult<()> {
+    m.add_class::<PAISequencer>()?;
+    Ok(())
+}
 
 #[derive(Debug, PartialEq)] // To be able to assert on enum value - see main.rs for details.
 pub enum PAISequencerState {
@@ -70,22 +80,34 @@ pub enum PAISequencerState {
 ///
 /// # Arguments
 ///
+#[pyclass]
 pub struct PAISequencer {
     /// bla
     input: String,
-    state: PAISequencerState,
+    state: u8,
     source: gst::Element,
     sink: gst::Element,
     pipeline: gst::Pipeline,
 }
+
+#[pymethods]
 impl PAISequencer {
-    /// Constructor
+    #[classattr]
+    pub const CREATED: u8 = 10;
+    #[classattr]
+    pub const ERROR: u8 = 11;
+    #[classattr]
+    pub const RUNNING: u8 = 12;
+    #[classattr]
+    pub const STOPPED: u8 = 13;
+
+    #[new]
     pub fn new(input: &str) -> PAISequencer {
         // Initialize GStreamer
         gst::init().unwrap();
         let instance = PAISequencer {
             input: input.to_string(),
-            state: PAISequencerState::CREATED,
+            state: PAISequencer::CREATED,
             source: gst::ElementFactory::make("videotestsrc", Some("source"))
                 .expect("Could not create source element."),
             sink: gst::ElementFactory::make("autovideosink", Some("sink"))
@@ -114,8 +136,8 @@ impl PAISequencer {
     ///
     /// Note that the reference to self is set as mutable as we
     /// want to be able to change the state.
-    pub fn start(&mut self) -> &PAISequencerState {
-        self.state = PAISequencerState::RUNNING;
+    pub fn start(&mut self) -> u8 {
+        self.state = PAISequencer::RUNNING;
         // Start playing
         self.pipeline
             .set_state(gst::State::Playing)
@@ -141,20 +163,20 @@ impl PAISequencer {
         //     }
         // }
 
-        &self.state
+        self.state
     }
-    pub fn stop(&mut self) -> &PAISequencerState {
-        self.state = PAISequencerState::STOPPED;
+    pub fn stop(&mut self) -> u8 {
+        self.state = PAISequencer::STOPPED;
 
         self.pipeline
             .set_state(gst::State::Null)
             .expect("Unable to set the pipeline to the `Null` state");
 
-        &self.state
+        self.state
     }
     ///
-    pub fn state(&self) -> &PAISequencerState {
-        &self.state
+    pub fn state(&self) -> u8 {
+        self.state
     }
     pub fn input(&self) -> &String {
         &self.input
@@ -170,12 +192,12 @@ mod tests {
     fn test_states() {
         let mut sequencer = PAISequencer::new("video");
         println!("internal state {:?}", sequencer.state());
-        assert!(matches!(sequencer.state(), PAISequencerState::CREATED));
+        assert!(matches!(sequencer.state(), PAISequencer::CREATED));
         println!("sequencer state after start '{:?}'", sequencer.start());
-        assert!(matches!(sequencer.state(), PAISequencerState::RUNNING));
+        assert!(matches!(sequencer.state(), PAISequencer::RUNNING));
         println!("sleeping for 2 seconds");
         thread::sleep(time::Duration::from_millis(2000));
         println!("sequencer state after stop'{:?}'", sequencer.stop());
-        assert!(matches!(sequencer.state(), PAISequencerState::STOPPED));
+        assert!(matches!(sequencer.state(), PAISequencer::STOPPED));
     }
 }

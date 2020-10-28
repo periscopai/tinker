@@ -14,3 +14,5 @@ results.xml
 
 tutorial/
 autogen/
+
+__pycache__/

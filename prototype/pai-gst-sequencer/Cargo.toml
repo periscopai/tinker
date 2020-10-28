@@ -6,9 +6,17 @@ edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+name = "pai_gst_sequencer"
+crate-type = ["cdylib", "rlib"]
+
 [dependencies]
 clap = "2.33.3"
 gstreamer = "0.16.4"
+
+[dependencies.pyo3]
+version = "0.12.3"
+features = ["extension-module"]
 
 [dev-dependencies]
 cargo2junit = "0.1.6"

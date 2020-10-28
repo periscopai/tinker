@@ -31,6 +31,8 @@ help:
 	@echo -------
 	@echo "setup    - installs the required dependencies"
 	@echo "precheck - format, build and test the code prior to checkin"
+	@echo "pytest   - sets the library in develop mode and runs pytest against it"
+	@echo "develop  - sets the library in develop mode"
 	@echo "build    - builds the code"
 	@echo "run      - builds and runs"
 	@echo "fmt      - reformat code ... similar to Python black"
@@ -46,7 +48,9 @@ setup:
 	sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
 	gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
 	gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
-	gstreamer1.0-libav libgstrtspserver-1.0-dev libges-1.0-dev
+	gstreamer1.0-libav libgstrtspserver-1.0-dev libges-1.0-dev \
+	python3-dev python-dev python3.8-dev
+	pip install maturin pytest
 
 .PHONY: build
 build:
@@ -74,5 +78,17 @@ clean:
 	cargo $@ ${CARGO_MANIFEST}	
 
 .PHONY: precheck
-precheck: clean fmt test doc
+precheck: clean fmt pytest doc
 	git status
+
+.PHONY: python
+python:
+	maturin build --skip-auditwheel -b pyo3 -m pai-gst-sequencer/Cargo.toml
+
+.PHONY: develop
+develop:
+	maturin develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
+
+.PHONY: pytest
+pytest: develop
+	pytest pytests --junit-xml=results.xml 

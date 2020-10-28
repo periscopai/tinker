@@ -1,7 +1,6 @@
 //! Main program just to run things.
 //! This obviously doesn't do anything meaning full
 //!
-
 use clap::{App, Arg};
 use pai_gst_sequencer::*;
 /// We use the object which is in the same crate.
@@ -62,7 +61,7 @@ fn main() {
     println!("starting the sequencer");
     let state = sequencer.start();
     println!("state returned {:?}", state);
-    assert!(matches!(sequencer.state(), PAISequencerState::RUNNING));
+    assert!(matches!(sequencer.state(), PAISequencer::RUNNING));
 
     println!("sleeping for 5 seconds");
     thread::sleep(time::Duration::from_millis(5000));
@@ -79,7 +78,7 @@ fn main() {
     // assert!(sequencer.state() ==  PAISequencerState::STOPPED);
     // The compiler gives you an error. I found the solution below in stackoverflow
     // but don't understand it
-    assert!(matches!(sequencer.state(), PAISequencerState::STOPPED));
+    assert!(matches!(sequencer.state(), PAISequencer::STOPPED));
     println!("This is the end of the pathetic piece of code.")
 }
 

@@ -34,7 +34,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: nightly
           profile: minimal
           override: true
           components: rustfmt, rust-src
@@ -48,17 +48,24 @@ jobs:
 
       - name: Build
         run: make build
+        continue-on-error: true
         working-directory: ${{env.working-directory}}
 
-      - name: Run tests
+      - name: Run Rust tests
         run: make test
+        continue-on-error: true
         working-directory: ${{env.working-directory}}
 
-      - name: Push results to Testspace server
+      - name: Run Pytest
+        run: make pytest
+        working-directory: ${{env.working-directory}}
+
+      - name: Push Rust results to Testspace server
         run: |
           testspace results.xml
         working-directory: ${{env.working-directory}}
         if: always()        
+
 
       - name: Build Docs
         run: make doc doc-dir=../../autogen
