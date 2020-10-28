@@ -213,6 +213,39 @@ In either case, you will need to make you crate a dynamic library
 
 [Here](https://depth-first.com/articles/2020/08/10/python-extensions-in-pure-rust-with-pyo3/) is another, perhaps more comprehensive article.
 
+---
+**RUNNING THIS STUFF OUT OF THE BOX**
+
+```
+:prototype|proto/python-bindings⚡ ⇒ make setup # This create a venv under ~/venv/periscopai
+...
+******************** RUN THE FOLLOWING COMMAND ********************
+source ~/venv/periscopai/bin/activate
+*******************************************************************
+:prototype|proto/python-bindings⚡ ⇒ source ~/venv/periscopai/bin/activate
+(periscopai):prototype|proto/python-bindings⚡ ⇒  make pytest
+~/venv/periscopai/bin/maturin develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
+🐍 Found CPython 3.6m at python
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.46
+...
+   Compiling pai-gst-sequencer v0.1.0 (/home/laurent/periscopai/tinker/prototype/pai-gst-sequencer)
+    Finished dev [unoptimized + debuginfo] target(s) in 30.65s
+~/venv/periscopai/bin/pytest pytests --junit-xml=results.xml 
+=========================== test session starts ================================================
+platform linux -- Python 3.6.9, pytest-6.1.1, py-1.9.0, pluggy-0.13.1
+rootdir: /home/laurent/periscopai/tinker/prototype
+collected 1 item                                                                                                                                                             
+
+pytests/test_basic.py .                                                                                                                                                [100%]
+
+--------- generated xml file: /home/laurent/periscopai/tinker/prototype/results.xml -------------
+======================================== 1 passed in 5.04s ======================================
+
+```
+---
+
 Configuring the [cargo.toml](pai-gst-sequencer/Cargo.toml) file. Note the following
 
 ```toml
@@ -222,7 +255,14 @@ crate-type = ["cdylib", "lib"]
 ```
 
 PYO3 requires ``cdylib`` which generates a dynamic that needs to be loaded from 
-other languages. If adding this type alone, the project doesn't build.
+other languages. 
+
+Also you want to set your rust toolchain to ``nightly``
+
+```shell
+rustup default nightly
+```
+
 
 ```shell
 :pai-gst-sequencer|proto/python-bindings⚡ ⇒  cargo run

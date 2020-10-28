@@ -3,6 +3,8 @@
 CARGO_MANIFEST=--manifest-path pai-gst-sequencer/Cargo.toml
 doc-dir?=
 show-doc?=
+VENV_DIR=~/venv/periscopai
+ACTIVATE=$(VENV_DIR)/bin/activate
 
 ifneq ($(doc-dir),)
 	_target-dir = --target-dir $(doc-dir)
@@ -18,6 +20,13 @@ endif
 
 ifeq ($(CI),true)
 	XUNIT_REPORT=-- -Z unstable-options --format json | cargo2junit | tee results.xml
+	PIP=pip3
+	MATURIN=maturin
+	PYTEST=pytest
+else
+	PIP=$(VENV_DIR)/bin/pip3.6
+	PYTEST=$(VENV_DIR)/bin/pytest
+	MATURIN=$(VENV_DIR)/bin/maturin
 endif
 
 help:
@@ -42,6 +51,7 @@ help:
 	@echo "              show-doc=yes      optional - open doc in browser"
 	@echo "test     - runs the test"
 	@echo "clean    - cleans the build targets"
+	@echo "VENV_DIR=$(VENV_DIR)"
 
 .PHONY: setup
 setup:
@@ -49,8 +59,19 @@ setup:
 	gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
 	gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
 	gstreamer1.0-libav libgstrtspserver-1.0-dev libges-1.0-dev \
-	python3-dev python-dev python3.8-dev
-	pip install maturin pytest
+	python3-dev python-dev python3.8-dev python3-venv
+ifeq ($(CI),true)	
+	@echo "Skipping virtual env creation in CI"
+else
+	python3.6 -m venv $(VENV_DIR)
+endif
+	$(PIP) install -U pip setuptools
+	$(PIP) install maturin pytest
+ifneq ($(CI),true)	
+	@echo "******************** RUN THE FOLLOWING COMMAND ********************"
+	@echo "source $(ACTIVATE)"
+	@echo "*******************************************************************"
+endif
 
 .PHONY: build
 build:
@@ -87,8 +108,8 @@ python:
 
 .PHONY: develop
 develop:
-	maturin develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
+	$(MATURIN) develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
 
 .PHONY: pytest
 pytest: develop
-	pytest pytests --junit-xml=results.xml 
+	$(PYTEST) pytests --junit-xml=results.xml 
