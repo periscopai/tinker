@@ -29,7 +29,12 @@ jobs:
       - uses: testspace-com/setup-testspace@v1
         with:
           domain: periscopai
-          token: ${{ secrets.TESTSPACE_TOKEN }}    
+          token: ${{ secrets.TESTSPACE_TOKEN }}   
+          
+      - name: Add local bin to path
+        run: |
+          echo "/home/runner/.local/bin" >> $GITHUB_PATH
+ 
 
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
