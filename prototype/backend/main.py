@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 import pai_gst_sequencer
+
 SEQ_STATES = {
     '10':'CREATED',
     '11':'ERROR',
