@@ -67,6 +67,7 @@ else
 endif
 	$(PIP) install -U pip setuptools
 	$(PIP) install maturin pytest
+	$(PIP) install -r requirements.txt
 ifneq ($(CI),true)	
 	@echo "******************** RUN THE FOLLOWING COMMAND ********************"
 	@echo "source $(ACTIVATE)"
@@ -113,3 +114,11 @@ develop:
 .PHONY: pytest
 pytest: develop
 	$(PYTEST) pytests --junit-xml=results.xml 
+
+.PHONY: server
+server: develop
+	firefox http://127.0.0.1:8000/docs
+	python3.6 backend/main.py
+	
+
+

@@ -13,6 +13,8 @@
 - [Python Extensions](#python-extensions)
   - [PYO3](#pyo3)
 
+- [REST API](#rest-api)
+
 - [Crates](#crates)
     - [lib.rs](#librs)
 
@@ -312,6 +314,44 @@ which means that we can generate a library (``lib``) which will be linked with t
 - I could not figure out how to "export" enums to python so I basically declared some 
   contants as static class member.
 ---
+
+# REST API
+ 
+ Implemented a small [FastAPI](https://fastapi.tiangolo.com/) server to control 
+ the sequencer. 
+
+ To start the server
+
+ ```shell
+ (periscopai):prototype|proto/python-bindings⚡ ⇒  make server
+~/venv/periscopai/bin/maturin develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
+🐍 Found CPython 3.6m at python
+    Finished dev [unoptimized + debuginfo] target(s) in 0.03s
+firefox http://127.0.0.1:8000/docs
+python3.6 backend/main.py
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3260] using statreload
+INFO:     Started server process [3264]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ ```
+
+ To view the API documentation goto http://127.0.0.1:8000/docs
+
+ ![openapi](images/openapi-doc.png)
+
+ Of you can also play with Curl
+
+ ```shell
+ (periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X GET "http://127.0.0.1:8000/api/sequencer/state" -H  "accept: application/json"                                                                                   
+{"sequencer state":"CREATED"}%                                                                                     
+(periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X POST "http://127.0.0.1:8000/api/sequencer/start" -H  "accept: application/json" -d ""   
+{"sequencer state":"RUNNING"}%                                                                                     
+(periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X POST "http://127.0.0.1:8000/api/sequencer/stop" -H  "accept: application/json" -d ""    
+{"sequencer state":"STOPPED"}%                                                                                     
+(periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X GET "http://127.0.0.1:8000/api/sequencer/state" -H  "accept: application/json"
+{"sequencer state":"STOPPED"}%        
+ ```
 
 # Crates
 
