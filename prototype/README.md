@@ -11,6 +11,9 @@
     - [Documenting the code](#documenting-the-code)
 
 - [Python Extensions](#python-extensions)
+  - [PYO3](#pyo3)
+
+- [REST API](#rest-api)
 
 - [Crates](#crates)
     - [lib.rs](#librs)
@@ -192,10 +195,163 @@ Check the [Rust Documentation section](../doc/rust_primer.md#Documenting-the-cod
 
 # Python Extensions
 
-We want to create an extension providing access from Python to ``
+We want to create an extension providing access from Python to the sequencer. From various readings, there 
+are two methods. 
+
+- [cpython-rust](https://docs.rs/cpython/0.5.1/cpython/) available on [crates.io](https://crates.io/crates/cpython) which 
+  currently has about 200K downloads. Here is an [article on the subject](https://codeburst.io/how-to-use-rust-to-extend-python-360174ee5819).  
+- [pyo3](https://pyo3.rs) available on [crates.io](https://crates.io/crates/pyo3), has roughly twice the downloads and 
+   appears to have better support. In fact Pyo3 appears to be a fork from cpython-rust. I also came across
+   the topic on the [Why would a python programmer learn rust when there are no jobs in it](https://youtu.be/IYLf8lUqR40?t=974)  
+   at the Debian Conference (2019)
+
+Now, from what I understand, pyo3 only work with rust nighly, however, pyo3 seems a lot more trivial than cpython-rust. 
+So for the purpose of this prototype, I suggest we start with pyo3.
+
+In either case, you will need to make you crate a dynamic library
 
 
-- [Writing a Python module with Rust](https://mycognosist.github.io/tutorial-rust-python-lib.html)
+## Pyo3
+
+[Here](https://depth-first.com/articles/2020/08/10/python-extensions-in-pure-rust-with-pyo3/) is another, perhaps more comprehensive article.
+
+---
+**RUNNING THIS STUFF OUT OF THE BOX**
+
+```
+:prototype|proto/python-bindings⚡ ⇒ make setup # This create a venv under ~/venv/periscopai
+...
+******************** RUN THE FOLLOWING COMMAND ********************
+source ~/venv/periscopai/bin/activate
+*******************************************************************
+:prototype|proto/python-bindings⚡ ⇒ source ~/venv/periscopai/bin/activate
+(periscopai):prototype|proto/python-bindings⚡ ⇒  make pytest
+~/venv/periscopai/bin/maturin develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
+🐍 Found CPython 3.6m at python
+   Compiling proc-macro2 v1.0.24
+   Compiling unicode-xid v0.2.1
+   Compiling syn v1.0.46
+...
+   Compiling pai-gst-sequencer v0.1.0 (/home/laurent/periscopai/tinker/prototype/pai-gst-sequencer)
+    Finished dev [unoptimized + debuginfo] target(s) in 30.65s
+~/venv/periscopai/bin/pytest pytests --junit-xml=results.xml 
+=========================== test session starts ================================================
+platform linux -- Python 3.6.9, pytest-6.1.1, py-1.9.0, pluggy-0.13.1
+rootdir: /home/laurent/periscopai/tinker/prototype
+collected 1 item                                                                                                                                                             
+
+pytests/test_basic.py .                                                                                                                                                [100%]
+
+--------- generated xml file: /home/laurent/periscopai/tinker/prototype/results.xml -------------
+======================================== 1 passed in 5.04s ======================================
+
+```
+---
+
+Configuring the [cargo.toml](pai-gst-sequencer/Cargo.toml) file. Note the following
+
+```toml
+[lib]
+name = "pai_gst_sequencer"
+crate-type = ["cdylib", "lib"]
+```
+
+PYO3 requires ``cdylib`` which generates a dynamic that needs to be loaded from 
+other languages. 
+
+Also you want to set your rust toolchain to ``nightly``
+
+```shell
+rustup default nightly
+```
+
+
+```shell
+:pai-gst-sequencer|proto/python-bindings⚡ ⇒  cargo run
+   Compiling pai-gst-sequencer v0.1.0 (/home/laurent/periscopai/tinker/prototype/pai-gst-sequencer)
+error[E0432]: unresolved import `pai_gst_sequencer`
+ --> src/main.rs:6:5
+  |
+6 | use pai_gst_sequencer::*;
+  |     ^^^^^^^^^^^^^^^^^ use of undeclared type or module `pai_gst_sequencer`
+
+error[E0433]: failed to resolve: use of undeclared type or module `PAISequencer`
+  --> src/main.rs:59:25
+   |
+59 |     let mut sequencer = PAISequencer::new(&input);
+   |                         ^^^^^^^^^^^^ use of undeclared type or module `PAISequencer`
+
+error[E0433]: failed to resolve: use of undeclared type or module `PAISequencerState`
+  --> src/main.rs:65:41
+   |
+65 |     assert!(matches!(sequencer.state(), PAISequencerState::RUNNING));
+   |                                         ^^^^^^^^^^^^^^^^^ use of undeclared type or module `PAISequencerState`
+
+error[E0433]: failed to resolve: use of undeclared type or module `PAISequencerState`
+  --> src/main.rs:82:41
+   |
+82 |     assert!(matches!(sequencer.state(), PAISequencerState::STOPPED));
+   |                                         ^^^^^^^^^^^^^^^^^ use of undeclared type or module `PAISequencerState`
+
+error: aborting due to 4 previous errors
+
+Some errors have detailed explanations: E0432, E0433.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `pai-gst-sequencer`.
+```
+
+Fortunately, the [crate type are stackable](https://doc.rust-lang.org/reference/linkage.html)
+which means that we can generate a library (``lib``) which will be linked with the 
+[application](pai-gst-sequencer/src/main.rs). This is somewhat documented in the 
+[cargo issue 6659](https://github.com/rust-lang/cargo/issues/6659).
+
+---
+
+**KNOWN PROBLEMS**
+
+- Currently, I can't build the application. It fails with a linker error. So basically  
+  only python works. Now if I comment out all the "pyo3" macros, all is fine. 
+- I could not figure out how to "export" enums to python so I basically declared some 
+  contants as static class member.
+---
+
+# REST API
+ 
+ Implemented a small [FastAPI](https://fastapi.tiangolo.com/) server to control 
+ the sequencer. 
+
+ To start the server
+
+ ```shell
+ (periscopai):prototype|proto/python-bindings⚡ ⇒  make server
+~/venv/periscopai/bin/maturin develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
+🐍 Found CPython 3.6m at python
+    Finished dev [unoptimized + debuginfo] target(s) in 0.03s
+firefox http://127.0.0.1:8000/docs
+python3.6 backend/main.py
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [3260] using statreload
+INFO:     Started server process [3264]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+ ```
+
+ To view the API documentation goto http://127.0.0.1:8000/docs
+
+ ![openapi](images/openapi-doc.png)
+
+ Of you can also play with Curl
+
+ ```shell
+ (periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X GET "http://127.0.0.1:8000/api/sequencer/state" -H  "accept: application/json"                                                                                   
+{"sequencer state":"CREATED"}%                                                                                     
+(periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X POST "http://127.0.0.1:8000/api/sequencer/start" -H  "accept: application/json" -d ""   
+{"sequencer state":"RUNNING"}%                                                                                     
+(periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X POST "http://127.0.0.1:8000/api/sequencer/stop" -H  "accept: application/json" -d ""    
+{"sequencer state":"STOPPED"}%                                                                                     
+(periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X GET "http://127.0.0.1:8000/api/sequencer/state" -H  "accept: application/json"
+{"sequencer state":"STOPPED"}%        
+ ```
 
 # Crates
 
