@@ -24,7 +24,8 @@ ifeq ($(CI),true)
 	MATURIN=maturin
 	PYTEST=pytest
 else
-	PIP=$(VENV_DIR)/bin/pip3.6
+	PYTHON=$(VENV_DIR)/bin/python3.6
+	PIP=$(PYTHON) -m pip 
 	PYTEST=$(VENV_DIR)/bin/pytest
 	MATURIN=$(VENV_DIR)/bin/maturin
 endif
@@ -51,6 +52,7 @@ help:
 	@echo "              show-doc=yes      optional - open doc in browser"
 	@echo "test     - runs the test"
 	@echo "clean    - cleans the build targets"
+	@echo "server   - start the fastapi server"
 	@echo "VENV_DIR=$(VENV_DIR)"
 
 .PHONY: setup
@@ -66,7 +68,7 @@ else
 	python3.6 -m venv $(VENV_DIR)
 endif
 	$(PIP) install -U pip setuptools
-	$(PIP) install maturin pytest
+	$(PIP) install maturin pytest tox
 	$(PIP) install -r requirements.txt
 ifneq ($(CI),true)	
 	@echo "******************** RUN THE FOLLOWING COMMAND ********************"
@@ -112,13 +114,13 @@ develop:
 	$(MATURIN) develop -b pyo3 --manifest-path pai-gst-sequencer/Cargo.toml
 
 .PHONY: pytest
-pytest: develop
-	$(PYTEST) pytests --junit-xml=results.xml 
+pytest: 
+	tox
 
 .PHONY: server
 server: develop
-	firefox http://127.0.0.1:8000/docs
-	python3.6 backend/main.py
+	firefox http://127.0.0.1:8000/docs&
+	$(PYTHON) backend/main.py
 	
 
 

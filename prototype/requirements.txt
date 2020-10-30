@@ -1,2 +1,5 @@
+maturin 
+pytest 
+tox
 fastapi
 uvicorn
