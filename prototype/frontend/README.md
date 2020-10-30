@@ -11,7 +11,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
 ...
 ```
 
-- ```yarn global add live-server```
+- ``yarn global add live-server``
+- ``yarn global add babel-cli@6.24.1`` # Just to make sure things work
 
 ---
 **NOTE**

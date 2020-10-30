@@ -22,6 +22,7 @@ __pycache__/
 
 # Node JS/React stuff
 yarn.lock
+yarn-error.log
 node_modules/
 package-lock.json
 package.json
