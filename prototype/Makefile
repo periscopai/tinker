@@ -57,7 +57,7 @@ help:
 
 .PHONY: setup
 setup:
-	sudo apt-get install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
+	sudo apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
 	gstreamer1.0-plugins-base gstreamer1.0-plugins-good \
 	gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly \
 	gstreamer1.0-libav libgstrtspserver-1.0-dev libges-1.0-dev \
@@ -75,6 +75,23 @@ ifneq ($(CI),true)
 	@echo "source $(ACTIVATE)"
 	@echo "*******************************************************************"
 endif
+
+.PHONY: react-dev
+react-dev:
+	@echo *** installing NodeJS version 15
+	curl -sL https://deb.nodesource.com/setup_15.x -o nodesource_setup.sh
+	sudo bash nodesource_setup.sh  
+	sudo apt-get install -y nodejs 
+	@echo *** installing yarn
+	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+	echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+	sudo apt update
+	sudo apt install yarn
+	@echo "VERSION INSTALLED"
+	@echo "NODE JS :" `nodejs -v`
+	@echo "NPM     :" `npm -v`
+	@echo "YARN    :" `yarn -v`
+
 
 .PHONY: build
 build:

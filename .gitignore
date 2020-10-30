@@ -15,6 +15,13 @@ results.xml
 tutorial/
 autogen/
 
+# Python Stuff
 __pycache__/
 .pytest_cache/
 .tox/
+
+# Node JS/React stuff
+yarn.lock
+node_modules/
+package-lock.json
+package.json

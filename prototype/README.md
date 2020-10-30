@@ -353,6 +353,11 @@ INFO:     Application startup complete.
 {"sequencer state":"STOPPED"}%        
  ```
 
+# React Frontend code
+
+I have started building a small React application. For more information see
+[frontend/README](frontend/README.md)
+
 # Crates
 
 ---
