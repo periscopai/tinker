@@ -1,4 +1,5 @@
 (function() {var implementors = {};
 implementors["gstreamer"] = [{"text":"impl Neg for Fraction","synthetic":false,"types":[]},{"text":"impl&lt;'_&gt; Neg for &amp;'_ Fraction","synthetic":false,"types":[]}];
 implementors["num_rational"] = [{"text":"impl&lt;T&gt; Neg for Ratio&lt;T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Clone + Integer + Neg&lt;Output = T&gt;,&nbsp;</span>","synthetic":false,"types":[]},{"text":"impl&lt;'a, T&gt; Neg for &amp;'a Ratio&lt;T&gt; <span class=\"where fmt-newline\">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: Clone + Integer + Neg&lt;Output = T&gt;,&nbsp;</span>","synthetic":false,"types":[]}];
+implementors["pyo3"] = [{"text":"impl&lt;'py&gt; Neg for &amp;'py PyComplex","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

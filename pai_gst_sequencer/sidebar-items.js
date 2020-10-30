@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["PAISequencerState",""]],"struct":[["PAISequencer","Periscopai sequence pipeline"]]});
+initSidebarItems({"constant":[["GST_INPUT",""],["GST_OUTPUT",""]],"fn":[["main","This is the main function"]]});
