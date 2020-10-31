@@ -76,23 +76,6 @@ ifneq ($(CI),true)
 	@echo "*******************************************************************"
 endif
 
-.PHONY: react-dev
-react-dev:
-	@echo *** installing NodeJS version 15
-	curl -sL https://deb.nodesource.com/setup_15.x -o nodesource_setup.sh
-	sudo bash nodesource_setup.sh  
-	sudo apt-get install -y nodejs 
-	@echo *** installing yarn
-	curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-	echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-	sudo apt update
-	sudo apt install yarn
-	@echo "VERSION INSTALLED"
-	@echo "NODE JS :" `nodejs -v`
-	@echo "NPM     :" `npm -v`
-	@echo "YARN    :" `yarn -v`
-
-
 .PHONY: build
 build:
 	cargo $@  $(_verbose) ${CARGO_MANIFEST}

@@ -1,14 +1,30 @@
-console.log('App.js is running')
+'use strict';
 
-// JSX - Javascript XML provided by React for templating
-// The JSX code below can not be rendered by the browse and therefore needs
-// to be cross-compiled to JS ES5 using https://babeljs.io/
-// Click on Try out and type the following
-//var template = <p>This is JSX from app.js</p>;
-// whch should render to
-var template = /*#__PURE__*/React.createElement("p", {
-    id: "someid"
-  }, "Fakayou");
-var app_root = document.getElementById('app')
-// Redenring the template
-ReactDOM.render(template, app_root);
+// argument object - no longer bound to arrow functions
+
+var add = function add(a, b) {
+    console.log(arguments);
+    return a + b;
+};
+console.log(add(23, 24));
+
+// This keyword
+
+var user = {
+    name: "Laurent",
+    cities: ['Geneva', 'Montreal', 'San Jose', 'barcelona'],
+
+    print_places_lived: function print_places_lived() {
+        var _this = this;
+
+        var city_message = this.cities.map(function (city) {
+            return city;
+        });
+
+        this.cities.forEach(function (city) {
+            console.log(_this.name + " lived in " + city);
+        });
+    }
+};
+
+user.print_places_lived();
