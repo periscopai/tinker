@@ -1,30 +1,62 @@
-'use strict';
+"use strict";
 
-// argument object - no longer bound to arrow functions
+console.log('App.js is running');
 
-var add = function add(a, b) {
-    console.log(arguments);
-    return a + b;
-};
-console.log(add(23, 24));
+// JSX - Javascript XML provided by React for templating
+// The JSX code below can not be rendered by the browse and therefore needs
+// to be cross-compiled to JS ES5 using https://babeljs.io/
+// Click on Try out and type the following
+//var template = <p>This is JSX from app.js</p>;
+// whch should render to
+// var template = /*#__PURE__*/React.createElement("p", {
+//     id: "someid"
+//   }, "Fakayou");
+//
+// A Tempate must have a single root.
 
-// This keyword
+// Only render sub stitle exists
+// if options.len() > Here are your options
 
-var user = {
-    name: "Laurent",
-    cities: ['Geneva', 'Montreal', 'San Jose', 'barcelona'],
-
-    print_places_lived: function print_places_lived() {
-        var _this = this;
-
-        var city_message = this.cities.map(function (city) {
-            return city;
-        });
-
-        this.cities.forEach(function (city) {
-            console.log(_this.name + " lived in " + city);
-        });
-    }
+var application = {
+  title: "Periscopai",
+  sub_title: "Machine Learning User Interface Test System",
+  options: ["One", "Two"]
 };
 
-user.print_places_lived();
+var template = React.createElement(
+  "div",
+  null,
+  React.createElement(
+    "h1",
+    null,
+    application.title
+  ),
+  application.sub_title && React.createElement(
+    "p",
+    null,
+    "application.sub_title"
+  ),
+  React.createElement(
+    "p",
+    null,
+    application.options.length > 0 ? "You have options" : null
+  ),
+  React.createElement(
+    "ol",
+    null,
+    React.createElement(
+      "li",
+      null,
+      "one"
+    ),
+    React.createElement(
+      "li",
+      null,
+      "two"
+    )
+  )
+);
+
+var app_root = document.getElementById('app');
+// Redenring the template
+ReactDOM.render(template, app_root);

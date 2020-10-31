@@ -11,8 +11,34 @@ if command -v pyenv 1>/dev/null 2>&1; then
 ...
 ```
 
-- ``yarn global add live-server``
-- ``yarn global add babel-cli@6.24.1`` # Just to make sure things work
+when running for the first time, run
+
+```shell
+$ make react-dev
+```
+
+This will install nodejs, yarn and all the required dependencies.
+
+Next time around, simply install using
+
+```shell
+$ make install
+```
+
+Finally to run the code, type
+```shell
+$ make run [source=path_to_the_source_js]
+```
+This will invoke Babel to cross compile ``path_to_the_source_js`` to [public/scripts/app.js](public/scripts/app.js).
+Note that you DO NOT WANT to edit this file as it is automatically generated from the source ``path_to_the_source_js``.
+By default, source point to [src/app.js](src/app.js)
+
+``make run`` will also start the live server which automatically load the code in your default browser. 
+Whenever the file is saved, it is cross-compiled, then reloaded to the browser.
+
+Simply ``CTRL-C`` make to stop this process.
+
+
 
 ---
 **NOTE**
