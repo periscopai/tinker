@@ -1,41 +1,85 @@
+/** This is a simple prototype for the web interface built using React. 
+ *  Very basic at this point. 
+ * 
+ *  The application should give control over the system, provide a 
+ *  monitoring window (webRTC) and perhaps some other features such
+ *  as creating new training data on the fly (remotely controlling the 
+ *  UI via the actuator and annotating it)
+ * 
+ * Author: Laurent Brack
+ */
 console.log('App.js is running')
 
-// JSX - Javascript XML provided by React for templating
-// The JSX code below can not be rendered by the browse and therefore needs
-// to be cross-compiled to JS ES5 using https://babeljs.io/
-// Click on Try out and type the following
-//var template = <p>This is JSX from app.js</p>;
-// whch should render to
-// var template = /*#__PURE__*/React.createElement("p", {
-//     id: "someid"
-//   }, "Fakayou");
-//
-// A Tempate must have a single root.
+/**
+ * Periscopai Application (React Component)
+ */
+class PeriscopaiApp extends React.Component{
+  render(){
+    const title = "Periscopai";
+    const sub_title = "Machine Learning User Interface Test System";
+    return (
+        <div>
+          <p>{title}</p>
+          <Transport/>
+          <Monitor/>
+        </div>
+    );
+  }
+}
 
-// Only render sub stitle exists
-// if options.len() > Here are your options
+/**
+ * Transport button
+ * Instances of this class represent a transport button which will 
+ * are responsible for reaching end points
+ * @param {string} id : button identifier
+ * @param {string} caption: button caption
+ * 
+ */
+class TransportButton extends React.Component{
+  render(){
+    return(
+      <button id={this.props.id}>{this.props.caption}</button>
+    );
+  }
+}
 
-const application = {
-  title: "Periscopai",
-  sub_title: "Machine Learning User Interface Test System",
-  options: ["One", "Two"],
-};
+/**
+ * Represents the Transport component. 
+ * This component contains the control and display elements 
+ * of the sequencer such as number of frame processed. 
+ * 
+ * This could also be used to turn on (or off) bounding box 
+ * overlays, highlight changes only, etc. 
+ */
+class Transport extends React.Component{
+  render(){
+    return (
+      <div>
+        <p>Sequencer Transport</p>
+        <TransportButton id="start_button" caption="Start"/>
+        <TransportButton id="stop_button" caption="Stop"/>
+      </div>
+    );
+  }
 
+}
 
-const template = (
-<div>
-  <h1>{application.title}</h1>
-  {application.sub_title && <p>application.sub_title</p>}
-  <p>{application.options.length > 0 ? "You have options" : null}</p>
-  <ol>
-    <li>one</li>
-    <li>two</li>
-  </ol>
-</div>
-);
+/**
+ * Monitor component
+ * 
+ * The monitor component should consist of the webRTC module responsible
+ * for get the video stream from the system.
+ */
+class Monitor extends React.Component{
+  //
+  render(){
+    return (
+      <div>
+        <p>MONITOR</p>
+        <img src="../monitor.jpg" alt="Italian Trulli" width="600" height="315"/>
+      </div>
+    );
+  }
+}
 
-
-
-const app_root = document.getElementById('app')
-// Redenring the template
-ReactDOM.render(template, app_root);
+ReactDOM.render(<PeriscopaiApp/>, document.getElementById('app'))

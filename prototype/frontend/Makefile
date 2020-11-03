@@ -22,6 +22,8 @@ react-dev:
 	yarn global add live-server
 	@echo *** installing babel-cli
 	yarn global add babel-cli@6.24.1
+	@echo *** install jsdoc
+	yarn global add jsdoc
 
 	@echo "VERSION INSTALLED"
 	@echo "NODE JS     : " `nodejs -v`
@@ -39,4 +41,7 @@ run:
 	babel $(source) --out-file=public/scripts/app.js --presets=env,react --watch &
 	live-server public
 
- 
+ .PHONY: docs
+ doc:
+	jsdoc $(source) --destination ./docs
+	firefox ./docs/index.html
