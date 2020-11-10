@@ -1,13 +1,18 @@
 source ?= src/app.js
+NODE_MODULE=$(shell pwd)/node_modules
+export PATH:=$(NODE_MODULE)/.bin:$(PATH)
 
 .PHONY: help
 help:
-	@echo "reac-dev : should only be called once to setup all the JS stuff"
+	@echo "setup : should only be called once to setup all the JS stuff"
 	@echo "install  : installs all the module dependency"
 	@echo "run      : starts babel to cross compile the code and start the live server" 
+	@echo "doc     : generate the documentation"
+	@echo $(NODE_MODULE)
+	@echo $(PATH)
 
-.PHONY: react-dev
-react-dev:
+.PHONY: setup
+setup:
 	@echo *** installing NodeJS version 15
 	curl -sL https://deb.nodesource.com/setup_15.x -o nodesource_setup.sh
 	sudo bash nodesource_setup.sh  
@@ -18,30 +23,25 @@ react-dev:
 	sudo apt update
 	sudo apt install yarn
 	PATH=$PATH:$HOME/.yarn/bin/
-	@echo *** installing live-server
-	yarn global add live-server
-	@echo *** installing babel-cli
-	yarn global add babel-cli@6.24.1
-	@echo *** install jsdoc
-	yarn global add jsdoc
-
 	@echo "VERSION INSTALLED"
 	@echo "NODE JS     : " `nodejs -v`
 	@echo "NPM         : " `npm -v`
-	@echo "YARN        : " `yarn -v`
-	@echo "LIVE-SERVER : " `live-server --version`
-	@echo "BABEL-CLI   : " `babel --version`
 
 .PHONY: install
 install:
 	yarn install
+	@echo "YARN        : " `yarn -v`
+	@echo "LIVE-SERVER : " `live-server --version`
+	@echo "BABEL-CLI   : " `babel --version`
+
 
 .PHONY: run
 run:
-	babel $(source) --out-file=public/scripts/app.js --presets=env,react --watch &
+	#babel $(source) --out-file=public/scripts/app.js --presets=env,react --watch &
+	webpack --watch &
 	live-server public
 
  .PHONY: docs
  doc:
-	jsdoc $(source) --destination ./docs
-	firefox ./docs/index.html
+	jsdoc $(source) --destination ./docs/autogen
+	firefox ./docs/autogen/index.html
