@@ -1,4 +1,6 @@
 source ?= src/app.js
+webpack ?= periscopai
+WEBPACK_CFG_NAME=$(webpack)
 NODE_MODULE=$(shell pwd)/node_modules
 export PATH:=$(NODE_MODULE)/.bin:$(PATH)
 
@@ -6,10 +8,12 @@ export PATH:=$(NODE_MODULE)/.bin:$(PATH)
 help:
 	@echo "setup : should only be called once to setup all the JS stuff"
 	@echo "install  : installs all the module dependency"
-	@echo "run      : starts babel to cross compile the code and start the live server" 
-	@echo "doc     : generate the documentation"
-	@echo $(NODE_MODULE)
-	@echo $(PATH)
+	@echo "run      : starts webpack server - by default it runs the periscopai configuration - use pakt for fun" 
+	@echo "build    : build the bundle file through webpack"
+	@echo "doc      : generate the documentation"
+	@echo
+	@echo "Configuration: $(WEBPACK_CFG_NAME) - use webpack=<config name> to change" 
+	@echo "Node modules: $(NODE_MODULE)"
 
 .PHONY: setup
 setup:
@@ -35,11 +39,19 @@ install:
 	@echo "BABEL-CLI   : " `babel --version`
 
 
+
 .PHONY: run
 run:
 	#babel $(source) --out-file=public/scripts/app.js --presets=env,react --watch &
-	webpack --watch &
-	live-server public
+	
+	#live-server public
+	@echo "webpack server for '$(WEBPACK_CFG_NAME)' configuration"
+	webpack serve --config-name=$(WEBPACK_CFG_NAME)
+
+.PHONY: build
+build:
+	@echo "webpack build for '$(WEBPACK_CFG_NAME)' configuration"
+	webpack --config-name=$(WEBPACK_CFG_NAME)
 
  .PHONY: docs
  doc:
