@@ -13,7 +13,7 @@ class Monitor extends React.Component {
       return (
         <div>
           <p>MONITOR</p>
-          <img src="../monitor.jpg" alt="Italian Trulli" width="600" height="315" />
+          <img src="../images/monitor.png" alt="Italian Trulli"  />
         </div>
       );
     }

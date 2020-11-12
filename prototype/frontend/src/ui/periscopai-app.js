@@ -13,8 +13,8 @@ class PeriscopaiApp extends React.Component {
       return (
         <div>
           <Header title={title} sub_title = {sub_title}/>
-          <Transport />
           <Monitor />
+          <Transport />
         </div>
       );
     }
