@@ -11,6 +11,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PeriscopaiApp from './ui/periscopai-app'
+import 'normalize.css/normalize.css';
+import './styles/styles.scss';
+
 //import Button from '@material-ui/core/Button';
 console.log('App.js is running')
 ReactDOM.render(<PeriscopaiApp />, document.getElementById('app'));

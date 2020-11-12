@@ -1,6 +1,7 @@
 import React from 'react';
 import Transport from './transport';
 import Monitor from './monitor'
+import Header from './header';
 
 /**
  * Periscopai Application (React Component)
@@ -11,7 +12,7 @@ class PeriscopaiApp extends React.Component {
       const sub_title = "Machine Learning User Interface Test System";
       return (
         <div>
-          <p>{title}</p>
+          <Header title={title} sub_title = {sub_title}/>
           <Transport />
           <Monitor />
         </div>

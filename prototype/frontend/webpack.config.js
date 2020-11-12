@@ -24,7 +24,16 @@ module.exports = [
                 loader: 'babel-loader',
                 test: /\.js$/,
                 exclude: /node_module/
-            }]
+            },
+            {
+                test: /\.s?css$/,
+                use: [
+                    'style-loader', 
+                    'css-loader',
+                    'sass-loader',
+                ],
+            }
+            ]
         },
         // https://webpack.js.org/configuration/devtool/#root
         devtool: 'eval-cheap-module-source-map',
@@ -48,6 +57,14 @@ module.exports = [
                 loader: 'babel-loader',
                 test: /\.js$/,
                 exclude: /node_module/
+            },
+            {
+                test: /\.s?css$/,
+                use: [
+                    'style-loader', 
+                    'css-loader',
+                    'sass-loader',
+                ],
             }]
         },
         // https://webpack.js.org/configuration/devtool/#root
