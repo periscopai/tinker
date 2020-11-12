@@ -42,9 +42,6 @@ install:
 
 .PHONY: run
 run:
-	#babel $(source) --out-file=public/scripts/app.js --presets=env,react --watch &
-	
-	#live-server public
 	@echo "webpack server for '$(WEBPACK_CFG_NAME)' configuration"
 	webpack serve --config-name=$(WEBPACK_CFG_NAME)
 

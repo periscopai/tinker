@@ -5,6 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+          "name": "Launch debugger",
+          "type": "firefox",
+          "request": "attach",
+          "url": "http://127.0.0.1:8080/index.html",
+          "pathMappings": [{
+            "url": "http://127.0.0.1:8080",
+            "path": "${workspaceFolder}/prototype/frontend/public"
+        },
+        {
             "name": "gstreamer build and debug active file",
             "type": "cppdbg",
             "request": "launch",

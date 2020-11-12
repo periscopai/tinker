@@ -19,7 +19,8 @@ class Transport extends React.Component {
       baseURL: 'http://127.0.0.1:8000/api/',
       timeout: 2000,
       method: 'no-cors',
-      headers: { Accept: 'application/json',
+      headers: {
+                 Accept: 'application/json',
 			           'Content-Type': 'application/json',
     }
     });
