@@ -1,5 +1,4 @@
 import React from 'react';
-import Transport from './transport';
 import Monitor from './monitor'
 import Header from './header';
 
@@ -13,8 +12,7 @@ class PeriscopaiApp extends React.Component {
       return (
         <div>
           <Header title={title} sub_title = {sub_title}/>
-          <Monitor />
-          <Transport />
+          <Monitor></Monitor>
         </div>
       );
     }

@@ -1,20 +1,22 @@
+
+// Top header consisting of the Title and sub title
 .header {
-    background: #20222b;
-    color: white;
+    background: $header-backgroud-color;
+    color: $true-white;
     margin-bottom: 4.8rem;
-    padding: 1.6rem 0;
+    padding: $vertical-medium-padding $horizontal-medium-padding;
 
 }
 
 // BEM (Block Element Modifier)
 .header__title {
-    font-size: 3.2rem;
+    font-size: $large-font-size;
     margin: 0;
 }
 
 .header__subtitle {
-    font-size: 1.6rem;
+    font-size: $medium-font-size;
     margin: 0;
-    color: #a5afd7;
+    color: $off-white;
     font-weight: 500;
 }

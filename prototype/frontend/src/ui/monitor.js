@@ -1,6 +1,6 @@
 import React from 'react';
-
-
+import Transport from './transport';
+import Streaming from './streaming';
 /**
  * Monitor component
  * 
@@ -11,10 +11,10 @@ class Monitor extends React.Component {
     //
     render() {
       return (
-        <div>
-          <p>MONITOR</p>
-          <img src="../images/monitor.png" alt="Italian Trulli"  />
-        </div>
+        <div className='monitor'>
+        <Transport/>
+        <Streaming/> 
+      </div>
       );
     }
   }

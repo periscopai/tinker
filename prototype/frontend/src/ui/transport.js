@@ -40,11 +40,11 @@ class Transport extends React.Component {
   
     render() {
       return (
-        <div>
-          <p>Sequencer Transport{}</p>
+        <div className='transport'>
+          <p className='transport__title'>Sequencer</p>
           <TransportButton id="start_button" caption="Start" disabled={this.state.is_running} onClick={this.onStart} />
           <TransportButton id="stop_button" caption="Stop" disabled={!this.state.is_running} onClick={this.onStop} />
-          <p>STATE: {this.state.is_running ? "RUNNING" : "STOPPED"}</p>
+          <p className='transport__state'>{this.state.is_running ? "RUNNING" : "STOPPED"}</p>
         </div>
       );
     }
@@ -63,6 +63,7 @@ class TransportButton extends React.Component {
     render() {
       return (
         <button 
+          className="button"
           onClick={this.props.onClick} 
           disabled={this.props.disabled}
           id={this.props.id}>

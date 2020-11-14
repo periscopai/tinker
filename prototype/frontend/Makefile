@@ -42,7 +42,7 @@ install:
 
 .PHONY: run
 run:
-	@echo "webpack server for '$(WEBPACK_CFG_NAME)' configuration"
+	@echo "webpack server for '$(WEBPACK_CFG_NAME)' configuration"	
 	webpack serve --config-name=$(WEBPACK_CFG_NAME)
 
 .PHONY: build
