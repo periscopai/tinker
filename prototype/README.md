@@ -15,6 +15,8 @@
 
 - [REST API](#rest-api)
 
+- [React Frontend](#react-frontend)
+
 - [Crates](#crates)
     - [lib.rs](#librs)
 
@@ -353,7 +355,7 @@ INFO:     Application startup complete.
 {"sequencer state":"STOPPED"}%        
  ```
 
-# React Frontend code
+# React Frontend
 
 I have started building a small React application. For more information see
 [frontend/README](frontend/README.md)

@@ -133,5 +133,5 @@ The start firefox
 # WebRTC
 
 Establish a connection over WebRTC between the device (gstreamer running on whatever) and 
-the browser deserves [it's own document](./docs/webrtc.md) (considering I know close to nothing about WebRTC).
+the browser deserves [it's own document](./docs/webrtc/README.md) (considering I know close to nothing about WebRTC).
 
