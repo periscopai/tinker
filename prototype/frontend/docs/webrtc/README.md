@@ -1,16 +1,18 @@
 # WebRTC
 
-[WebRTC](https://en.wikipedia.org/wiki/WebRTC) is a "standard" for real time communication 
-(not limited to video conferencing) aimed at establish sessions for real time communication
-between one or more entities. 
+[WebRTC](https://en.wikipedia.org/wiki/WebRTC) is a "standard" for real 
+time communication (not limited to video conferencing) aimed at 
+establishing sessions for real time communication between one or more 
+entities. 
 
-There are multiples possible topologies which also involve different services depending on 
-their complexity. Keep in mind that WebRTC is intended to connect entities which may sit 
-behing NAT as well as very strict firewall rules. While we do not intend to use most of 
+There are multiples possible topologies which also involve different 
+services depending on their complexity. Keep in mind that WebRTC is 
+intended to connect entities which may sit behing NAT or are constrained
+by very strict firewall rules. While we do not intend to use most of 
 those services, it is important to understand what they are:
 
 - **ICE** or [Interactive Connectivity Establishment ](https://en.wikipedia.org/wiki/Interactive_Connectivity_Establishment)
-  is a framework to find and establish connection with peers (Think of it as a yellow pages). 
+  is a framework to find and establish connection with peers via a STUN server. 
   This will not be needed because we can only connect with one peer, the periscopai pipeline 
   running on the same host. 
 
@@ -32,18 +34,23 @@ This is illustrated below.
 However, an important concept is the SDP. 
 
 - **SDP** or [Session Description Protocol](https://en.wikipedia.org/wiki/Session_Description_Protocol)
-  is a very important concept. The SDP is basically by which two peers can discover their capabilities 
-  and intent. This describes the codecs, encryption, etc. that is expected from the session. 
+  is a very important concept. The SDP is basically the protocol by which two 
+  peers can discover their capabilities and intent. This describes the codecs, 
+  encryption, etc. that is expected from the session. 
 
 I came accross this project [webrtc-without-signaling-server](https://github.com/lesmana/webrtc-without-signaling-server)
-which is very similar to what we need to achieve. This was also part of an experiment for some gaming 
-app.
+which is very similar to what we need to achieve. This was also part of an experiment for some gaming  app.
 
 # The Prototype
 
 There are two aspect to this. First we need to implement the javascript to establish 
 a video connection with the backend (gstreamer). For now we are limiting ourselves to 
 video only but we could eventually consider capturing audio as well. 
+
+Note that most of the "sample" I find out there don't work out of the box. So basically it 
+boils down to reading multiple samples and trying to make sense of them. 
+
+
 
 
 
