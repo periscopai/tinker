@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import WebRTCToStreamingPipeline from '../model/webrtc';
 
 /**
  * Represents the Transport component. 
@@ -15,6 +16,10 @@ class Transport extends React.Component {
     state = {
       is_running: false
     };
+
+    webrtc_connector = new WebRTCToStreamingPipeline();
+
+
     axios_instance = axios.create({
       baseURL: 'http://127.0.0.1:8000/api/',
       timeout: 2000,
@@ -26,16 +31,20 @@ class Transport extends React.Component {
     });
   
     onStart = () => {
-      this.axios_instance.post('sequencer/start');
+      //this.axios_instance.post('sequencer/start');
       this.setState(() => {
+        this.props.onStart();
         return { is_running: true };
       });
+      this.webrtc_connector.connect();
     }
     onStop = () => {
-      this.axios_instance.post('sequencer/stop');
+      //this.axios_instance.post('sequencer/stop');
       this.setState(() => {
+        this.props.onStop();
         return { is_running: false };
       });
+      this.webrtc_connector.disconnect();
     }
   
     render() {

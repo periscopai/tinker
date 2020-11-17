@@ -9,11 +9,22 @@ import Streaming from './streaming';
  */
 class Monitor extends React.Component {
     //
+    state = {
+        streaming: false
+    };
+
+    onStartStreaming = () => {
+      this.setState(() => ({streaming: true}));
+    }
+    onStopStreaming = () => {
+      this.setState(() => ({streaming: false}));
+    }
+
     render() {
       return (
         <div className='monitor'>
-        <Transport/>
-        <Streaming/> 
+        <Transport onStart={this.onStartStreaming} onStop={this.onStopStreaming}/>
+        <Streaming streaming={this.state.streaming}/> 
       </div>
       );
     }

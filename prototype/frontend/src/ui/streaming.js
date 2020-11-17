@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 /**
  * Streaming component
  * 
@@ -10,9 +9,11 @@ import React from 'react';
 class Streaming extends React.Component {
     //
     render() {
+      console.log(this.props)
       return (
         <div>
-          <img src="../images/monitor.png" alt="Italian Trulli"  />
+          <video id="periscopai_backend" autoPlay></video>
+          {!this.props.streaming && <img src="../images/monitor.png" alt="Italian Trulli"  />}
         </div>
       );
     }
