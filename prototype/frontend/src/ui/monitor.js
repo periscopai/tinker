@@ -9,22 +9,30 @@ import Streaming from './streaming';
  */
 class Monitor extends React.Component {
     //
+
+    // We need to be able to access the Streaming component 
+    // To establish the connecting with the WebRTC Stack
+    _child = React.createRef()
+
     state = {
         streaming: false
     };
 
     onStartStreaming = () => {
       this.setState(() => ({streaming: true}));
+      this._child.current.connect();
     }
     onStopStreaming = () => {
       this.setState(() => ({streaming: false}));
+      console.log(this._child);
+      this._child.current.disconnect();
     }
 
     render() {
       return (
         <div className='monitor'>
         <Transport onStart={this.onStartStreaming} onStop={this.onStopStreaming}/>
-        <Streaming streaming={this.state.streaming}/> 
+        <Streaming streaming={this.state.streaming} ref={this._child}/> 
       </div>
       );
     }

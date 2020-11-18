@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import WebRTCToStreamingPipeline from '../model/webrtc';
 
 /**
  * Represents the Transport component. 
@@ -12,13 +11,9 @@ import WebRTCToStreamingPipeline from '../model/webrtc';
  */
 class Transport extends React.Component {
 
-
     state = {
       is_running: false
     };
-
-    webrtc_connector = new WebRTCToStreamingPipeline();
-
 
     axios_instance = axios.create({
       baseURL: 'http://127.0.0.1:8000/api/',
@@ -36,7 +31,6 @@ class Transport extends React.Component {
         this.props.onStart();
         return { is_running: true };
       });
-      this.webrtc_connector.connect();
     }
     onStop = () => {
       //this.axios_instance.post('sequencer/stop');
@@ -44,15 +38,21 @@ class Transport extends React.Component {
         this.props.onStop();
         return { is_running: false };
       });
-      this.webrtc_connector.disconnect();
     }
   
     render() {
       return (
         <div className='transport'>
           <p className='transport__title'>Sequencer</p>
-          <TransportButton id="start_button" caption="Start" disabled={this.state.is_running} onClick={this.onStart} />
-          <TransportButton id="stop_button" caption="Stop" disabled={!this.state.is_running} onClick={this.onStop} />
+          <TransportButton id="start_button" 
+              caption="Start" 
+              disabled={this.state.is_running} 
+              onClick={this.onStart} />
+
+          <TransportButton id="stop_button" 
+              caption="Stop" 
+              disabled={!this.state.is_running} 
+              onClick={this.onStop} />
           <p className='transport__state'>{this.state.is_running ? "RUNNING" : "STOPPED"}</p>
         </div>
       );

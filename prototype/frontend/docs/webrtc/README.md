@@ -58,3 +58,5 @@ boils down to reading multiple samples and trying to make sense of them.
 
 * [MDN Protcols](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Protocols)
 * [What is WebRTC (medium.com)](https://medium.com/av-transcode/what-is-webrtc-and-how-to-setup-stun-turn-server-for-webrtc-communication-63314728b9d0)
+* [Signaling and video calling](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Signaling_and_video_calling)
+* [Lifetime of a WebRTC session](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Session_lifetime#Establishing_a_connection)
