@@ -15,6 +15,8 @@
 
 - [REST API](#rest-api)
 
+- [React Frontend](#react-frontend)
+
 - [Crates](#crates)
     - [lib.rs](#librs)
 
@@ -352,6 +354,11 @@ INFO:     Application startup complete.
 (periscopai):prototype|proto/python-bindings⚡ ⇒  curl -X GET "http://127.0.0.1:8000/api/sequencer/state" -H  "accept: application/json"
 {"sequencer state":"STOPPED"}%        
  ```
+
+# React Frontend
+
+I have started building a small React application. For more information see
+[frontend/README](frontend/README.md)
 
 # Crates
 

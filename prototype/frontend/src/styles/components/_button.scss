@@ -1,0 +1,23 @@
+.button {
+    background: $button-color;   
+    border: none;
+    border-bottom: .3rem solid darken($button-color, 10%);
+    color: $true-white;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    font-size: small;
+    width: 90%;
+}
+
+.button:disabled {
+    opacity: 0.5;
+}
+
+// BEM -- is to modifier
+.button--link {
+    background: none;
+    border: none;
+    color: $off-white;
+    padding: 0;
+}
+

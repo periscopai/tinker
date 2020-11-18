@@ -1,0 +1,20 @@
+.transport {
+    display: flex;
+    flex-direction: column;
+    background: $transport-background;
+}
+
+.transport__title {
+    color: $off-white;
+    font-style: italic;
+}
+
+.transport__state {
+    border: 2px solid lighten(blue, 20%);
+    background: black;
+    padding: 0;
+    margin: 0;
+    font-size: smaller;
+    font-weight: bold;
+    color: yellow;
+}
