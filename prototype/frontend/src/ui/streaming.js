@@ -80,6 +80,8 @@ class Streaming extends React.Component {
               const onUserMediaSuccess = this.onUserMediaSuccess.bind(this);
               // For more details on constraint, see
               //https://tools.ietf.org/html/draft-alvestrand-constraints-resolution-03
+              // Note that we could get a lot more demanding but for now let's just the 
+              // basic stuff.
               const media_constraints = { video: true, audio: false };
               navigator.mediaDevices.getUserMedia(media_constraints)
               .then(onUserMediaSuccess) 
@@ -109,6 +111,11 @@ class Streaming extends React.Component {
       }
 
       this.connection = undefined;
+      if (this.state.mediaStream){
+        const video_tracks = this.state.mediaStream.getVideoTracks();
+        console.log(video_tracks)
+        video_tracks[0].stop();
+      }
       this.setState(() => ({ mediaStream: undefined }));
     }
 
