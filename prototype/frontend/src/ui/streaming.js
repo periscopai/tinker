@@ -25,7 +25,7 @@ class Streaming extends React.Component {
     }
 
     error = (msg, show_alert=false) => {
-      msg = `ERROR [Streaming] ${msg}`
+      msg = `ERROR [Streaming] yo ${msg}`
       console.log(msg);
       console.log(show_alert);
       if (show_alert){
@@ -76,6 +76,7 @@ class Streaming extends React.Component {
                      true);
       }
       else{
+        console.log("fuck");
           try {
               const onUserMediaSuccess = this.onUserMediaSuccess.bind(this);
               // For more details on constraint, see
