@@ -59,15 +59,15 @@
 extern crate gstreamer as gst;
 extern crate pyo3;
 use gst::prelude::*;
-use pyo3::prelude::*;
+///use pyo3::prelude::*;
 
 /// A Python module implemented in Rust.
-#[pymodule]
-#[allow(unused_variables)]
-fn pai_gst_sequencer(py: Python, m: &PyModule) -> PyResult<()> {
-    m.add_class::<PAISequencer>()?;
-    Ok(())
-}
+// #[pymodule]
+// #[allow(unused_variables)]
+// fn pai_gst_sequencer(py: Python, m: &PyModule) -> PyResult<()> {
+//     m.add_class::<PAISequencer>()?;
+//     Ok(())
+// }
 
 #[derive(Debug, PartialEq)] // To be able to assert on enum value - see main.rs for details.
 pub enum PAISequencerState {
@@ -87,7 +87,7 @@ pub enum PAISequencerState {
 ///
 /// # Arguments
 ///
-#[pyclass]
+/// #[pyclass]
 pub struct PAISequencer {
     /// bla
     input: String,
@@ -97,18 +97,18 @@ pub struct PAISequencer {
     pipeline: gst::Pipeline,
 }
 
-#[pymethods]
+/// #[pymethods]
 impl PAISequencer {
-    #[classattr]
+    /// #[classattr]
     pub const CREATED: u8 = 10;
-    #[classattr]
+    /// #[classattr]
     pub const ERROR: u8 = 11;
-    #[classattr]
+    /// #[classattr]
     pub const RUNNING: u8 = 12;
-    #[classattr]
+    /// #[classattr]
     pub const STOPPED: u8 = 13;
 
-    #[new]
+    /// #[new]
     pub fn new(input: &str) -> PAISequencer {
         // Initialize GStreamer
         gst::init().unwrap();

@@ -51,23 +51,31 @@ jobs:
           cargo install cargo2junit
         working-directory: ${{env.working-directory}}
 
-      - name: Build
-        run: make build
-        continue-on-error: true
+      - name: Build Sequencer
+        run: make build project=pai-gst-sequencer
         working-directory: ${{env.working-directory}}
 
-      - name: Run Rust tests
-        run: make test
-        continue-on-error: true
+      - name: Build RocketAI
+        run: make build project=pai-gst-sequencer
+        working-directory: ${{env.working-directory}}
+
+
+      - name: Running Sequencer Rust Test
+        run: make test project=pai-gst-sequencer
+        working-directory: ${{env.working-directory}}
+
+      - name: Running Rocket AI Rust Test
+        run: make test project=rocketai
         working-directory: ${{env.working-directory}}
 
       - name: Run Pytest
         run: make pytest
+        continue-on-error: true
         working-directory: ${{env.working-directory}}
 
       - name: Push Rust results to Testspace server
         run: |
-          testspace results.xml
+          testspace xunit-*.xml
         working-directory: ${{env.working-directory}}
         if: always()        
 

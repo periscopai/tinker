@@ -1,8 +1,8 @@
 .PHONY: help
-
-CARGO_MANIFEST=--manifest-path pai-gst-sequencer/Cargo.toml
+project?=pai-gst-sequencer
 doc-dir?=
 show-doc?=
+CARGO_MANIFEST=--manifest-path $(project)/Cargo.toml
 VENV_DIR=~/venv/periscopai
 ACTIVATE=$(VENV_DIR)/bin/activate
 
@@ -18,8 +18,9 @@ ifeq ($(show-doc),yes)
 	_show-doc = "--open"
 endif
 
+XUNIT_REPORT=-- -Z unstable-options --format json | cargo2junit | tee xunit-$(project).xml
+
 ifeq ($(CI),true)
-	XUNIT_REPORT=-- -Z unstable-options --format json | cargo2junit | tee results.xml
 	PIP=pip3
 	MATURIN=maturin
 	PYTEST=pytest

@@ -10,7 +10,7 @@ Cargo.lock
 **/*.rs.bk
 
 # Test results.
-results.xml
+xunit*.xml
 
 tutorial/
 autogen/
@@ -19,7 +19,7 @@ autogen/
 __pycache__/
 .pytest_cache/
 .tox/
-
+.idea/
 # Node JS/React stuff
 yarn-error.log
 node_modules/
