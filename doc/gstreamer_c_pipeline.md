@@ -10,8 +10,9 @@ C then trying something through Rust.
   - [Cleanup](#cleanup)
   - [Factories](#factories)
   - [Dynamic Pipelining](#dynamic-pipelining)
-  - [gst-inspect](gst-inspect)
-- [Examples](examples)
+  - [gst-inspect](#gst-inspect)
+- [Examples](#examples)
+  - [rtsp pipeline](#rtsp-pipeline)
 
 ---
 REFERENCE
@@ -236,9 +237,89 @@ Time management is the topic of [tutorial 4](https://gstreamer.freedesktop.org/d
 
 # Examples
 
-Don't forget to refer to the [Gstreamer Lib Documentation]
+Throughtout those examples, Don't forget to refer to the [Gstreamer Lib Documentation]
 
-To be started.
+---
+**Command Line Processing**
+
+See the [glib option processing](https://developer.gnome.org/glib/stable/glib-Commandline-option-parser.html) documentation for examples. 
+
+You can find the implementation in [gst-rtsp.c](../gstreamer/rtsp/gst-rtsp.c)
+
+---
+
+## RTSP Pipeline
+
+Check the [RTSP Primer](rtsp_primer.md) to make sure you understand RTSP streaming. 
+
+``` shell
+========================================================
+running target/rls/gst-rtsp --help
+========================================================
+Usage:
+  gst-rtsp [OPTION?] RTSP Pipeline
+
+  This application creates a gstreamer pipeline using either the camera
+  as the source or a video file.
+  
+  The data should be decoded (in the case of a file), then encoded and
+  sent over RTSP. 
+
+Help Options:
+  -h, --help                        Show help options
+  --help-all                        Show all help options
+  --help-gst                        Show GStreamer Options
+
+Application Options:
+  -s, --silent                      do not output status information
+  -l, --loop                        loop over the input file if specified.
+  -t, --time                        if set, run for the specified amount of time - in seconds
+  -f, --frames                      number of frames to streams.
+  -i, --input-file                  [optional] input video file to decode (assumes camera otherwise)
+  -o, --output-file                 [optional] file to capture streamed output
+
+========================================================
+```
+
+
+### Design
+
+- This is based on [Real Time Streaming Tutorial](http://www.einarsundgren.se/gstreamer-basic-real-time-streaming-tutorial/)
+- [Introduction to network streaming using gstreamer](https://developer.ridgerun.com/wiki/index.php/Introduction_to_network_streaming_using_GStreamer)
+- [maybe useful](http://trac.gateworks.com/wiki/Yocto/gstreamer/streaming#rtsp)
+
+With that said, we need to implement the pipeline. Before hardcoding the pipeline, 
+it is a good idea to use gst-launch to understand the elements being used. The following
+use the camera as the source only taking the raw video (VGA) and sends it to the display
+
+
+
+```shell
+gst-launch-1.0 v4l2src device="/dev/video0" ! video/x-raw,width=640,height=480 ! autovideosink
+# If your camera doesn't work you can use a test source
+gst-launch-1.0 videotestsrc ! video/x-raw,width=640,height=480 ! autovideosink
+```
+
+To stream it, it need to be encoded.
+
+```
+ gst-launch-1.0 -vv -m v4l2src device="/dev/video0" ! videobalance saturation=0 ! video/x-raw,width=640,height=480 ! videoconvert ! videoscale ! video/x-raw,width=800,height=600 ! x264enc ! video/x-h264, stream-format=byte-stream ! h264parse config-interval=-1 ! rtph264pay ! udpsink host=127.0.0.1 port=5000
+ 
+ 
+ gst-launch-1.0 -vv -m v4l2src device="/dev/video0" ! videobalance saturation=0 ! video/x-raw,width=640,height=480 ! videoconvert ! videoscale ! video/x-raw,width=800,height=600 ! x264enc ! video/x-h264, stream-format=byte-stream ! mpegtsmux ! rtpmp2tpay ! udpsink host=127.0.0.1 port=5000
+ 
+ ```
+
+
+
+During this process:
+
+- The number of frames processed should be printed.
+- If a video file input, the content is is demuxed and processed
+ 
+
+
+
 
 
 [Gstreamer Lib Documentation]: https://gstreamer.freedesktop.org/documentation/libs.html

@@ -1,5 +1,6 @@
 debug?=false
 SOURCE=gst-rtsp.c
+args?=
 GCC_DEBUG_FLAG=
 ifeq ($(strip $(debug)),true)
 	TARGET_DIR=target/debug
@@ -18,8 +19,11 @@ build: env
 
 .PHONY: run
 run: build
-	@echo running $(TARGET)
-	$(TARGET)
+	@echo ========================================================
+	@echo running $(TARGET) $(args)
+	@echo ========================================================
+	@$(TARGET) $(args)
+	@echo ========================================================
 
 .PHONY: env
 env:
